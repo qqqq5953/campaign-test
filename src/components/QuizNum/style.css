@@ -1,0 +1,56 @@
+.quiznum {
+    background-position: 50% 50%;
+    background-size: cover;
+    height: 38px;
+  }
+  
+  .quiznum.one {
+    background-image: url(https://anima-uploads.s3.amazonaws.com/projects/64dc7dc3c024ed42c1e5eb56/releases/64ed973b9ce878144e8a5bc6/img/quiz-01@2x.png);
+    width: 42px;
+  }
+  
+  .quiznum.seven {
+    background-image: url(https://anima-uploads.s3.amazonaws.com/projects/64dc7dc3c024ed42c1e5eb56/releases/64eebb9666b2aab0be2ddae5/img/quiz-07@2x.png);
+    width: 46px;
+  }
+  
+  .quiznum.four {
+    background-image: url(https://anima-uploads.s3.amazonaws.com/projects/64dc7dc3c024ed42c1e5eb56/releases/64eebb9666b2aab0be2ddae5/img/quiz-04@2x.png);
+    width: 47px;
+  }
+  
+  .quiznum.three {
+    background-image: url(https://anima-uploads.s3.amazonaws.com/projects/64dc7dc3c024ed42c1e5eb56/releases/64eebb9666b2aab0be2ddae5/img/quiz-03@2x.png);
+    width: 46px;
+  }
+  
+  .quiznum.two {
+    background-image: url(https://anima-uploads.s3.amazonaws.com/projects/64dc7dc3c024ed42c1e5eb56/releases/64eebb9666b2aab0be2ddae5/img/quiz-02@2x.png);
+    width: 47px;
+  }
+  
+  .quiznum.ten {
+    background-image: url(https://anima-uploads.s3.amazonaws.com/projects/64dc7dc3c024ed42c1e5eb56/releases/64eebb9666b2aab0be2ddae5/img/quiz-10@2x.png);
+    width: 56px;
+  }
+  
+  .quiznum.eight {
+    background-image: url(https://anima-uploads.s3.amazonaws.com/projects/64dc7dc3c024ed42c1e5eb56/releases/64eebb9666b2aab0be2ddae5/img/quiz-08@2x.png);
+    width: 47px;
+  }
+  
+  .quiznum.six {
+    background-image: url(https://anima-uploads.s3.amazonaws.com/projects/64dc7dc3c024ed42c1e5eb56/releases/64eebb9666b2aab0be2ddae5/img/quiz-06@2x.png);
+    width: 47px;
+  }
+  
+  .quiznum.five {
+    background-image: url(https://anima-uploads.s3.amazonaws.com/projects/64dc7dc3c024ed42c1e5eb56/releases/64eebb9666b2aab0be2ddae5/img/quiz-05@2x.png);
+    width: 46px;
+  }
+  
+  .quiznum.nine {
+    background-image: url(https://anima-uploads.s3.amazonaws.com/projects/64dc7dc3c024ed42c1e5eb56/releases/64eebb9666b2aab0be2ddae5/img/quiz-09@2x.png);
+    width: 47px;
+  }
+  

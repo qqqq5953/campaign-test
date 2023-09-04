@@ -1,0 +1,110 @@
+.btn .div {
+    color: #000000;
+    position: relative;
+    width: fit-content;
+  }
+  
+  .btn .social-icon {
+    height: 32px !important;
+    position: relative !important;
+    width: 32px !important;
+  }
+  
+  .btn .content {
+    color: #ffffff;
+    font-family: var(--1-6bold-font-family);
+    font-size: var(--1-6bold-font-size);
+    font-style: var(--1-6bold-font-style);
+    font-weight: var(--1-6bold-font-weight);
+    letter-spacing: var(--1-6bold-letter-spacing);
+    line-height: var(--1-6bold-line-height);
+    position: relative;
+    width: fit-content;
+  }
+  
+  .btn.size-m {
+    border-radius: var(--collection-1-btn-radius);
+    padding: var(--collection-1-margin-XS) var(--collection-1-padding-s) var(--collection-1-margin-XS)
+      var(--collection-1-padding-s);
+    width: 196px;
+  }
+  
+  .btn.qz {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    position: relative;
+  }
+  
+  .btn.size-l {
+    border-radius: 61.37px;
+    padding: var(--collection-1-padding-s) var(--collection-1-padding-m) var(--collection-1-padding-s)
+      var(--collection-1-padding-m);
+    width: 247px;
+  }
+  
+  .btn.landing-btn {
+    background-image: url(https://anima-uploads.s3.amazonaws.com/projects/64dc7dc3c024ed42c1e5eb56/releases/64eebb9666b2aab0be2ddae5/img/landing-btn-1-2@2x.png);
+    background-position: 50% 50%;
+    background-size: cover;
+    height: 60px;
+  }
+  
+  .btn.social-btn {
+    align-items: center;
+    border: 1px solid;
+    border-color: #ffffff;
+    display: flex;
+    gap: var(--collection-1-padding-XS);
+    position: relative;
+  }
+  
+  .btn.pressing-true {
+    background-color: #503c2533;
+  }
+  
+  .btn.size-one.landing-btn {
+    width: 176px;
+  }
+  
+  .btn.size-one.social-btn {
+    border-radius: 10px;
+    padding: var(--collection-1-padding-XS) var(--collection-1-padding-l) var(--collection-1-padding-XS)
+      var(--collection-1-padding-m);
+    width: 172px;
+  }
+  
+  .btn.qz.pressing-false {
+    background-color: #ffffff;
+  }
+  
+  .btn.size-m .div {
+    font-family: var(--btn-textm-font-family);
+    font-size: var(--btn-textm-font-size);
+    font-style: var(--btn-textm-font-style);
+    font-weight: var(--btn-textm-font-weight);
+    letter-spacing: var(--btn-textm-letter-spacing);
+    line-height: var(--btn-textm-line-height);
+    margin-top: -0.81px;
+  }
+  
+  .btn.size-l .div {
+    font-family: var(--btn-textl-font-family);
+    font-size: var(--btn-textl-font-size);
+    font-style: var(--btn-textl-font-style);
+    font-weight: var(--btn-textl-font-weight);
+    letter-spacing: var(--btn-textl-letter-spacing);
+    line-height: var(--btn-textl-line-height);
+    margin-top: -1.02px;
+    white-space: nowrap;
+  }
+  
+  .btn.size-l.pressing-false .div {
+    text-align: center;
+  }
+  
+  .btn.size-m.pressing-false .div {
+    margin-left: -6px;
+    margin-right: -6px;
+  }
+  

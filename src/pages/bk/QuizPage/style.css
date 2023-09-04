@@ -1,0 +1,27 @@
+.index {
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+  }
+  
+  .index .overlap-group-wrapper {
+    background-color: #ffffff;
+    height: 810px;
+    width: 1440px;
+  }
+  
+  .index .overlap-group {
+    background-image: url(https://anima-uploads.s3.amazonaws.com/projects/64dc7dc3c024ed42c1e5eb56/releases/64e5bb6acde608a2857356ee/img/background-normal--1.png);
+    background-position: 50% 50%;
+    background-size: cover;
+    height: 810px;
+  }
+  
+  .index .quiz-pattern-instance {
+    left: 485px !important;
+    position: relative !important;
+    top: 115px !important;
+  }
+  

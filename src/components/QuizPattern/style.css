@@ -1,0 +1,68 @@
+.quiz-pattern {
+    background-image: url(https://anima-uploads.s3.amazonaws.com/projects/64dc7dc3c024ed42c1e5eb56/releases/64e5c7d9572ccd70c04a6edd/img/quiz-paper-1.png);
+    background-position: 50% 50%;
+    background-size: cover;
+    height: 580px;
+    width: 471px;
+  }
+  
+  .quiz-pattern .quiz {
+    align-items: flex-start;
+    display: inline-flex;
+    flex-direction: column;
+    gap: var(--collection-1-margin-XS);
+    left: 112px;
+    position: relative;
+    top: 125px;
+  }
+  
+  .quiz-pattern .quiznum-instance {
+    height: 37.62px !important;
+    position: relative !important;
+    width: 41.58px !important;
+  }
+  
+  .quiz-pattern .title-answer {
+    align-items: flex-start;
+    display: inline-flex;
+    flex: 0 0 auto;
+    flex-direction: column;
+    gap: var(--collection-1-margin-s);
+    position: relative;
+  }
+  
+  .quiz-pattern .titlecontent {
+    color: #131f16;
+    font-family: var(--l-font-family);
+    font-size: var(--l-font-size);
+    font-style: var(--l-font-style);
+    font-weight: var(--l-font-weight);
+    letter-spacing: var(--l-letter-spacing);
+    line-height: var(--l-line-height);
+    margin-top: -1px;
+    position: relative;
+    width: 247px;
+  }
+  
+  .quiz-pattern .answer-container {
+    align-items: center;
+    align-self: stretch;
+    display: flex;
+    flex: 0 0 auto;
+    flex-direction: column;
+    gap: var(--collection-1-margin-XS);
+    position: relative;
+    width: 100%;
+  }
+  
+  .quiz-pattern .btn-instance {
+    align-self: stretch !important;
+    flex: 0 0 auto !important;
+    width: 100% !important;
+  }
+  
+  .quiz-pattern .design-component-instance-node {
+    margin-left: -4.5px !important;
+    margin-right: -4.5px !important;
+  }
+  
