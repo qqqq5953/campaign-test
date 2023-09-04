@@ -1,7 +1,7 @@
 [
     {
         "id": "1",
-        "label": "src/assets/quiz/Q1.png",
+        "label": "Q1",
         "question": "你最怕遇到的雷隊友？",
         "answers": [
             {
@@ -24,7 +24,7 @@
     },
     {
         "id": "2",
-        "label": "src/assets/quiz/Q2.png",
+        "label": "Q2",
         "question": "哪一項是你想進行的首要任務？",
         "answers": [
             {
@@ -47,7 +47,7 @@
     },
     {
         "id": "3",
-        "label": "src/assets/quiz/Q3.png",
+        "label": "Q3",
         "question": "你常會拿Chat GPT來做什麼呢？",
         "answers": [
             {
@@ -70,7 +70,7 @@
     },
     {
         "id": "4",
-        "label": "src/assets/quiz/Q4.png",
+        "label": "Q4",
         "question": "你認為自己哪一項能力比較突出呢？",
         "answers": [
             {
@@ -93,7 +93,7 @@
     },
     {
         "id": "5",
-        "label": "src/assets/quiz/Q5.png",
+        "label": "Q5",
         "question": "當你要幫助客戶網站開發一個新功能時，你喜歡從哪個方向切入？",
         "answers": [
             {
@@ -116,7 +116,7 @@
     },
     {
         "id": "6",
-        "label": "src/assets/quiz/Q6.png",
+        "label": "Q6",
         "question": "當與到同事之間有爭拗，大家各持己見時，你傾向怎麼做？",
         "answers": [
             {
@@ -139,7 +139,7 @@
     },
     {
         "id": "7",
-        "label": "src/assets/quiz/Q7.png",
+        "label": "Q7",
         "question": "當同一問題反覆發生時，會先想到？",
         "answers": [
             {
@@ -162,7 +162,7 @@
     },
     {
         "id": "8",
-        "label": "src/assets/quiz/Q8.png",
+        "label": "Q8",
         "question": "開發功能時，你最喜歡哪個流程？",
         "answers": [
             {
@@ -185,7 +185,7 @@
     },
     {
         "id": "9",
-        "label": "src/assets/quiz/Q9.png",
+        "label": "Q9",
         "question": "當同事小明在茶水間分享你的八卦，你會？",
         "answers": [
             {
@@ -208,7 +208,7 @@
     },
     {
         "id": "10",
-        "label": "src/assets/quiz/Q10.png",
+        "label": "Q10",
         "question": "午餐時間你習慣？",
         "answers": [
             {

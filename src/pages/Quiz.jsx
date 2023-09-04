@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 import { useState } from "react"
 import data from "../data.json"
+import getImageUrl from "../helpers/getImageUrl";
 
 let sum = 0
 
@@ -35,21 +36,23 @@ export default function Quiz() {
     return (
         <div className="relative h-screen">
             <picture>
-                <source media="(min-width: 1200px)" srcSet="../src/assets/background/1200-bg.png" />
-                <source media="(min-width: 768px)" srcSet="../src/assets/background/810-bg.png" />
-                <img src="../src/assets/background/375-bg.png" alt="Image description" className="w-full h-full object-cover" />
+                <source media="(min-width: 1200px)" srcSet={getImageUrl('background', '1200-bg')} />
+                <source media="(min-width: 768px)" srcSet={getImageUrl('background', '810-bg')} />
+                <img src={getImageUrl('background', '375-bg')} alt="Image description" className="w-full h-full object-cover" />
             </picture>
 
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[500px] md px-5">
                 {isLoading ?
                     <Loading />
                     : <>
-                        <img src="../src/assets/quiz/poster.png" alt="poster" />
+                        <img src={getImageUrl('quiz', 'poster')} alt="poster" />
                         <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 h-full w-2/3">
                             <div className="relative h-full mx-6 text-sm md:text-base">
                                 {/* 題目 */}
                                 <div className="absolute top-16 md:top-[16%] w-full py-1">
-                                    <img src={currentQuestion.label} alt="label" className="block h-8" />
+                                    <img
+                                        src={getImageUrl('quiz', currentQuestion.label)}
+                                        alt="label" className="block h-8" />
                                     <p className="mt-2">{currentQuestion.question}</p>
                                 </div>
 

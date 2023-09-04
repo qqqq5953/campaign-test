@@ -11,9 +11,6 @@ function App() {
       <Route path="/quiz" element={<Quiz />}></Route>
       <Route path="/result" element={<Result />}></Route>
       <Route path="/download" element={<Download />}></Route>
-      {/* <Route path="/quiz" element={<Quiz />}></Route> */}
-      {/* <Route path="/quiz">
-        </Route> */}
     </Routes>
   )
 }

@@ -1,5 +1,6 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useState } from 'react'
+import getImageUrl from "../helpers/getImageUrl";
 
 export default function Result() {
     const location = useLocation();
@@ -45,25 +46,10 @@ export default function Result() {
         window.open("https://www.instagram.com/create/story", "_self", "noreferrer")
     }
 
+    // facebook
     const isLocal = window.location.protocol.includes('http')
     const uri = isLocal ? "https://www.gaia.net/tc" : window.location.href
     const resultPageUri = encodeURI(uri)
-
-    const shareData = {
-        title: "MDN",
-        text: "Learn web development on MDN!",
-        url: "https://developer.mozilla.org",
-    };
-
-    async function share() {
-        console.log('navigator', navigator);
-        try {
-            await navigator.share(shareData);
-            console.log("MDN shared successfully");
-        } catch (err) {
-            console.log('err', err);
-        }
-    }
 
     return (
         <div className='px-4 pt-8 pb-36' style={{
@@ -73,9 +59,6 @@ export default function Result() {
             backgroundRepeat: "repeat"
         }}>
             <div className='mx-auto max-w-[400px]'>
-                <p><button onClick={share}>Share MDN!</button></p>
-
-
                 <img src={imagePath} alt={role} className='mx-auto' />
                 {isDownload ?
                     <>
