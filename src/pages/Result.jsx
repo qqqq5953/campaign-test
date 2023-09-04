@@ -21,26 +21,53 @@ export default function Result() {
 
     result = 6
     let role = ""
-    let extension = ".svg"
+    // let extension = ".svg"
+    let imagePath = ""
 
     if (result >= 0 && result <= 5) {
-        role = "knight"
+        imagePath = getImageUrl('result-element', 'knight', 'svg')
     } else if (result >= 6 && result <= 10) {
-        role = "wizard"
+        imagePath = getImageUrl('result-element', 'wizard', 'svg')
     } else if (result >= 11 && result <= 15) {
-        role = "archer"
+        imagePath = getImageUrl('result-element', 'archer', 'svg')
     } else if (result >= 16 && result <= 20) {
-        role = "assassin"
+        imagePath = getImageUrl('result-element', 'assassin', 'svg')
     } else if (result >= 21 && result <= 30) {
-        role = "trainer"
+        imagePath = getImageUrl('result-element', 'trainer', 'svg')
     }
 
     if (isDownload) {
-        role = role + "_download"
-        extension = ".png"
+        if (result >= 0 && result <= 5) {
+            imagePath = getImageUrl('result-element', 'knight_download')
+        } else if (result >= 6 && result <= 10) {
+            imagePath = getImageUrl('result-element', 'wizard_download')
+        } else if (result >= 11 && result <= 15) {
+            imagePath = getImageUrl('result-element', 'archer_download')
+        } else if (result >= 16 && result <= 20) {
+            imagePath = getImageUrl('result-element', 'assassin_download')
+        } else if (result >= 21 && result <= 30) {
+            imagePath = getImageUrl('result-element', 'trainer_download')
+        }
     }
 
-    const imagePath = "../src/assets/result-element/" + role + extension
+    // if (result >= 0 && result <= 5) {
+    //     role = "knight"
+    // } else if (result >= 6 && result <= 10) {
+    //     role = "wizard"
+    // } else if (result >= 11 && result <= 15) {
+    //     role = "archer"
+    // } else if (result >= 16 && result <= 20) {
+    //     role = "assassin"
+    // } else if (result >= 21 && result <= 30) {
+    //     role = "trainer"
+    // }
+
+    // if (isDownload) {
+    //     role = role + "_download"
+    //     extension = ".png"
+    // }
+
+    // const imagePath = "../src/assets/result-element/" + role + extension
 
     function shareToInsta() {
         window.open("https://www.instagram.com/create/story", "_self", "noreferrer")

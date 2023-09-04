@@ -74,8 +74,8 @@ export default function Quiz() {
 
 function Loading() {
     return <div className='bg-white/40 rounded-xl pt-16 pb-12 mx-5 space-y-5'>
-        <img src="../src/assets/result-element/loader.png" alt="loader" className='w-20 h-20 block mx-auto animate-bounce' />
-        <img src="../src/assets/result-element/wood.png" alt="loader" className='w-20 block mx-auto' />
+        <img src={getImageUrl('result-element', 'loader')} alt="loader" className='w-20 h-20 block mx-auto animate-bounce' />
+        <img src={getImageUrl('result-element', 'wood')} alt="loader" className='w-20 block mx-auto' />
         <p className='text-center text-slate-800 pt-3'>正在收集結果...</p>
     </div>
 }
