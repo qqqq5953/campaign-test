@@ -4,7 +4,7 @@ import Layout from './Layout';
 import { useState, useEffect } from "react";
 
 const md = window.matchMedia("(min-width: 768px)")
-const sm = window.matchMedia("(min-width: 375px) and (max-width: 767px)")
+const sm = window.matchMedia("(max-width: 767px)")
 
 export default function Home() {
     const [mdSize, setMdSize] = useState(md.matches)
