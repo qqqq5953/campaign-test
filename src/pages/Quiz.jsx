@@ -2,19 +2,28 @@ import { useNavigate } from 'react-router-dom'
 import { useState } from "react"
 import data from "../data.json"
 import getImageUrl from "../helpers/getImageUrl";
-import Layout from './Layout';
-
-
+// import Layout from './Layout';
 
 export default function Quiz() {
     const [isLoading, setIsLoading] = useState(false)
 
     return (
-        <Layout>
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[500px] md px-5">
-                {isLoading ? <Loading /> : <Questions setIsLoading={setIsLoading} />}
-            </div>
-        </Layout>
+        <div className="relative h-screen">
+            {lgSize && <img src={getImageUrl('background', '1200-bg')} alt="Image description" className="w-full h-full object-cover hidden lg:block" onLoad={() => setImageLoaded(true)} />}
+            {mdSize && <img src={getImageUrl('background', '810-bg')} alt="Image description" className="w-full h-full object-cover hidden md:block lg:hidden" onLoad={() => setImageLoaded(true)} />}
+            {smSize && <img src={getImageUrl('background', '375-bg')} alt="Image description" className="w-full h-full object-cover md:hidden" onLoad={() => setImageLoaded(true)} />}
+
+            {imageLoaded && <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full px-5 max-w-[400px]">
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[500px] md px-5">
+                    {isLoading ? <Loading /> : <Questions setIsLoading={setIsLoading} />}
+                </div>
+            </div>}
+        </div>
+        // <Layout>
+        //     <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[500px] md px-5">
+        //         {isLoading ? <Loading /> : <Questions setIsLoading={setIsLoading} />}
+        //     </div>
+        // </Layout>
     )
 }
 
