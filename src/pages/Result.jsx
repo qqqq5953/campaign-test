@@ -1,5 +1,5 @@
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useState, useRef } from 'react'
+import { useState, useRef, useMemo, useEffect } from 'react'
 import getImageUrl from "../helpers/getImageUrl";
 
 export default function Result() {
@@ -7,15 +7,9 @@ export default function Result() {
     const navigate = useNavigate();
     let { result } = location.state;
 
-    const [isDownload, setIsDownload] = useState(false)
-
     if (result == null) {
-        if (import.meta.env.MODE === 'production') {
-            navigate("/")
-            return null
-        } else {
-            result = 6
-        }
+        navigate("/")
+        return null
     }
 
     window.scrollTo({
@@ -34,31 +28,29 @@ export default function Result() {
         role = "archer"
     } else if (result >= 16 && result <= 20) {
         role = "assassin"
-
     } else if (result >= 21 && result <= 30) {
         role = "trainer"
-
     }
 
-    if (isDownload) {
-        role = role + "_download"
-        extension = "png"
-    }
+    const imagePath = useMemo(() => {
+        return getImageUrl('result-element', role, extension)
+    }, [])
 
-    const imagePath = getImageUrl('result-element', role, extension)
+    const downloadImagePath = useMemo(() => {
+        return getImageUrl('result-element', role + "_download", "png")
+    }, [])
 
     // function shareToInsta() {
     //     window.open("https://www.instagram.com/create/story", "_self", "noreferrer")
     // }
 
     // facebook
-    const isLocal = window.location.protocol.includes('http')
-    const uri = isLocal ? "https://www.gaia.net/tc" : window.location.href
-    const resultPageUri = encodeURI(uri)
+    // const isLocal = window.location.protocol.includes('http')
+    // const uri = isLocal ? "https://www.gaia.net/tc" : window.location.href
+    // const resultPageUri = encodeURI(uri)
 
     // share api
     const imageToShare = useRef(null)
-
     async function shareFromAPI() {
         const imageUrl = imageToShare.current.src;
         const imageBlob = await fetch(imageUrl).then((response) => response.blob());
@@ -80,26 +72,34 @@ export default function Result() {
         }
     }
 
-    const backgroundImage = new Image();
     const [isBgImgLoaded, setIsBgImgLoaded] = useState(false)
-    backgroundImage.src = getImageUrl('result-element', '375-bg')
-    backgroundImage.onload = function () {
-        setIsBgImgLoaded(true)
-    };
+    const [backgroundImageSrc, setBackgroundImageSrc] = useState('');
+
+    useEffect(() => {
+        // Load the background image when the component mounts
+        const backgroundImage = new Image();
+        const imageUrl = getImageUrl('result-element', '375-bg');
+        backgroundImage.onload = function () {
+            setIsBgImgLoaded(true);
+        };
+        backgroundImage.src = imageUrl;
+        setBackgroundImageSrc(imageUrl);
+    }, []);
 
     const [imageLoaded, setImageLoaded] = useState(false);
-
-
+    const [isDownload, setIsDownload] = useState(false)
 
     return (
         <div className='px-4 pt-8 pb-36' style={{
-            backgroundImage: `url(${getImageUrl('result-element', '375-bg')})`,
+            backgroundImage: `url(${backgroundImageSrc})`,
             backgroundSize: "cover",
             backgroundPosition: "top center",
             backgroundRepeat: "repeat"
         }}>
             {isBgImgLoaded && <div className='mx-auto max-w-[400px]'>
-                <img src={imagePath} alt="result-img" className='mx-auto' ref={imageToShare} onLoad={() => setImageLoaded(true)} />
+                <img src={downloadImagePath} alt="result-img" className={`mx-auto ${isDownload ? 'block' : 'hidden'}`} />
+                <img src={imagePath} alt="result-img" className={`mx-auto ${isDownload ? 'hidden' : 'block'}`} ref={imageToShare} onLoad={() => setImageLoaded(true)} />
+
                 {imageLoaded && <>
                     {isDownload ?
                         <div className=' text-white'>
