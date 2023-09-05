@@ -9,9 +9,13 @@ export default function Result() {
 
     const [isDownload, setIsDownload] = useState(false)
 
-    if (result == null && import.meta.env.MODE === 'production') {
-        navigate("/")
-        return null
+    if (result == null) {
+        if (import.meta.env.MODE === 'production') {
+            navigate("/")
+            return null
+        } else {
+            result = 6
+        }
     }
 
     window.scrollTo({
@@ -19,39 +23,68 @@ export default function Result() {
         behavior: "smooth"
     })
 
-    result = 6
-
     let imagePath = ""
+    let role = 'knight'
+    let extension = "svg"
 
     if (result >= 0 && result <= 5) {
-        imagePath = getImageUrl('result-element', 'knight', 'svg')
+        role = "knight"
+        // imagePath = getImageUrl('result-element', 'knight', 'svg')
     } else if (result >= 6 && result <= 10) {
-        imagePath = getImageUrl('result-element', 'wizard', 'svg')
+        role = "wizard"
+        // imagePath = getImageUrl('result-element', 'wizard', 'svg')
     } else if (result >= 11 && result <= 15) {
-        imagePath = getImageUrl('result-element', 'archer', 'svg')
+        role = "archer"
+        // imagePath = getImageUrl('result-element', 'archer', 'svg')
     } else if (result >= 16 && result <= 20) {
-        imagePath = getImageUrl('result-element', 'assassin', 'svg')
+        role = "assassin"
+        // imagePath = getImageUrl('result-element', 'assassin', 'svg')
     } else if (result >= 21 && result <= 30) {
-        imagePath = getImageUrl('result-element', 'trainer', 'svg')
+        role = "trainer"
+        // imagePath = getImageUrl('result-element', 'trainer', 'svg')
     }
 
     if (isDownload) {
-        if (result >= 0 && result <= 5) {
-            imagePath = getImageUrl('result-element', 'knight_download')
-        } else if (result >= 6 && result <= 10) {
-            imagePath = getImageUrl('result-element', 'wizard_download')
-        } else if (result >= 11 && result <= 15) {
-            imagePath = getImageUrl('result-element', 'archer_download')
-        } else if (result >= 16 && result <= 20) {
-            imagePath = getImageUrl('result-element', 'assassin_download')
-        } else if (result >= 21 && result <= 30) {
-            imagePath = getImageUrl('result-element', 'trainer_download')
-        }
+        role = role + "_download"
+        extension = "png"
     }
 
-    function shareToInsta() {
-        window.open("https://www.instagram.com/create/story", "_self", "noreferrer")
-    }
+    const testUrl = getImageUrl('result-element', role, extension)
+    console.log('testUrl', testUrl);
+
+    // if (isDownload) {
+    //     if (result >= 0 && result <= 5) {
+    //         imagePath = getImageUrl('result-element', 'knight_download')
+    //     } else if (result >= 6 && result <= 10) {
+    //         imagePath = getImageUrl('result-element', 'wizard_download')
+    //     } else if (result >= 11 && result <= 15) {
+    //         imagePath = getImageUrl('result-element', 'archer_download')
+    //     } else if (result >= 16 && result <= 20) {
+    //         imagePath = getImageUrl('result-element', 'assassin_download')
+    //     } else if (result >= 21 && result <= 30) {
+    //         imagePath = getImageUrl('result-element', 'trainer_download')
+    //     }
+    // } else {
+    // if (result >= 0 && result <= 5) {
+    //     imagePath = getImageUrl('result-element', 'knight', 'svg')
+    // } else if (result >= 6 && result <= 10) {
+    //     imagePath = getImageUrl('result-element', 'wizard', 'svg')
+    // } else if (result >= 11 && result <= 15) {
+    //     imagePath = getImageUrl('result-element', 'archer', 'svg')
+    // } else if (result >= 16 && result <= 20) {
+    //     imagePath = getImageUrl('result-element', 'assassin', 'svg')
+    // } else if (result >= 21 && result <= 30) {
+    //     imagePath = getImageUrl('result-element', 'trainer', 'svg')
+    // }
+    // }
+
+
+
+
+
+    // function shareToInsta() {
+    //     window.open("https://www.instagram.com/create/story", "_self", "noreferrer")
+    // }
 
     // facebook
     const isLocal = window.location.protocol.includes('http')
@@ -89,7 +122,8 @@ export default function Result() {
             backgroundRepeat: "repeat"
         }}>
             <div className='mx-auto max-w-[400px]'>
-                <img src={imagePath} alt="result-img" className='mx-auto' ref={imageToShare} />
+                <img src={testUrl} alt="result-img" className='mx-auto' ref={imageToShare} />
+                {/* <img src={imagePath} alt="result-img" className='mx-auto' ref={imageToShare} /> */}
                 {isDownload ?
                     <>
                         <div className=' text-white'>
