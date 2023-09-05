@@ -72,6 +72,7 @@ export default function Result() {
             try {
                 await navigator.share({ files: [imageFile] })
             } catch (error) {
+                if (error.name === "AbortError") return
                 alert(`Error: ${error.message}`)
             }
         } else {
