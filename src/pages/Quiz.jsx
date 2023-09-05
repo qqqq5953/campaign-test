@@ -2,30 +2,23 @@ import { useNavigate } from 'react-router-dom'
 import { useState } from "react"
 import data from "../data.json"
 import getImageUrl from "../helpers/getImageUrl";
+import Layout from './Layout';
 
-let sum = 0
+
 
 export default function Quiz() {
     const [isLoading, setIsLoading] = useState(false)
 
     return (
-        <div className="relative h-screen">
-            <picture>
-                <source media="(min-width: 1200px)" srcSet={getImageUrl('background', '1200-bg')} />
-                <source media="(min-width: 768px)" srcSet={getImageUrl('background', '810-bg')} />
-                <img src={getImageUrl('background', '375-bg')} alt="Image description" className="w-full h-full object-cover" />
-            </picture>
-
+        <Layout>
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[500px] md px-5">
-                {isLoading ?
-                    <Loading />
-                    : <Questions setIsLoading={setIsLoading} />
-                }
-
+                {isLoading ? <Loading /> : <Questions setIsLoading={setIsLoading} />}
             </div>
-        </div>
+        </Layout>
     )
 }
+
+let sum = 0
 
 function Questions({ setIsLoading }) {
     const [imageLoaded, setImageLoaded] = useState(false);
@@ -79,9 +72,12 @@ function Questions({ setIsLoading }) {
 }
 
 function Loading() {
+    const [loaderLoaded, setLoaderLoaded] = useState(false);
+    const [woodLoaded, setWoodLoaded] = useState(false);
+
     return <div className='bg-white/40 rounded-xl pt-16 pb-12 mx-5 space-y-5'>
-        <img src={getImageUrl('result-element', 'loader')} alt="loader" className='w-20 h-20 block mx-auto animate-bounce' />
-        <img src={getImageUrl('result-element', 'wood')} alt="loader" className='w-20 block mx-auto' />
-        <p className='text-center text-slate-800 pt-3'>正在收集結果...</p>
+        <img src={getImageUrl('result-element', 'loader')} alt="loader" className='w-20 h-20 block mx-auto animate-bounce' onLoad={() => setLoaderLoaded(true)} />
+        <img src={getImageUrl('result-element', 'wood')} alt="loader" className='w-20 block mx-auto' onLoad={() => setWoodLoaded(true)} />
+        {loaderLoaded && woodLoaded && <p className='text-center text-slate-800 pt-3'>正在收集結果...</p>}
     </div>
 }

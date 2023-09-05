@@ -23,25 +23,21 @@ export default function Result() {
         behavior: "smooth"
     })
 
-    let imagePath = ""
     let role = 'knight'
     let extension = "svg"
 
     if (result >= 0 && result <= 5) {
         role = "knight"
-        // imagePath = getImageUrl('result-element', 'knight', 'svg')
     } else if (result >= 6 && result <= 10) {
         role = "wizard"
-        // imagePath = getImageUrl('result-element', 'wizard', 'svg')
     } else if (result >= 11 && result <= 15) {
         role = "archer"
-        // imagePath = getImageUrl('result-element', 'archer', 'svg')
     } else if (result >= 16 && result <= 20) {
         role = "assassin"
-        // imagePath = getImageUrl('result-element', 'assassin', 'svg')
+
     } else if (result >= 21 && result <= 30) {
         role = "trainer"
-        // imagePath = getImageUrl('result-element', 'trainer', 'svg')
+
     }
 
     if (isDownload) {
@@ -49,38 +45,7 @@ export default function Result() {
         extension = "png"
     }
 
-    const testUrl = getImageUrl('result-element', role, extension)
-    console.log('testUrl', testUrl);
-
-    // if (isDownload) {
-    //     if (result >= 0 && result <= 5) {
-    //         imagePath = getImageUrl('result-element', 'knight_download')
-    //     } else if (result >= 6 && result <= 10) {
-    //         imagePath = getImageUrl('result-element', 'wizard_download')
-    //     } else if (result >= 11 && result <= 15) {
-    //         imagePath = getImageUrl('result-element', 'archer_download')
-    //     } else if (result >= 16 && result <= 20) {
-    //         imagePath = getImageUrl('result-element', 'assassin_download')
-    //     } else if (result >= 21 && result <= 30) {
-    //         imagePath = getImageUrl('result-element', 'trainer_download')
-    //     }
-    // } else {
-    // if (result >= 0 && result <= 5) {
-    //     imagePath = getImageUrl('result-element', 'knight', 'svg')
-    // } else if (result >= 6 && result <= 10) {
-    //     imagePath = getImageUrl('result-element', 'wizard', 'svg')
-    // } else if (result >= 11 && result <= 15) {
-    //     imagePath = getImageUrl('result-element', 'archer', 'svg')
-    // } else if (result >= 16 && result <= 20) {
-    //     imagePath = getImageUrl('result-element', 'assassin', 'svg')
-    // } else if (result >= 21 && result <= 30) {
-    //     imagePath = getImageUrl('result-element', 'trainer', 'svg')
-    // }
-    // }
-
-
-
-
+    const imagePath = getImageUrl('result-element', role, extension)
 
     // function shareToInsta() {
     //     window.open("https://www.instagram.com/create/story", "_self", "noreferrer")
@@ -122,8 +87,7 @@ export default function Result() {
             backgroundRepeat: "repeat"
         }}>
             <div className='mx-auto max-w-[400px]'>
-                <img src={testUrl} alt="result-img" className='mx-auto' ref={imageToShare} />
-                {/* <img src={imagePath} alt="result-img" className='mx-auto' ref={imageToShare} /> */}
+                <img src={imagePath} alt="result-img" className='mx-auto' ref={imageToShare} />
                 {isDownload ?
                     <>
                         <div className=' text-white'>
