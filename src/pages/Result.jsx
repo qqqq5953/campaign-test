@@ -97,8 +97,8 @@ export default function Result() {
             backgroundRepeat: "repeat"
         }}>
             {isBgImgLoaded && <div className='mx-auto max-w-[400px]'>
-                <img src={downloadImagePath} alt="result-img" className={`mx-auto ${isDownload ? 'block' : 'hidden'}`} />
-                <img src={imagePath} alt="result-img" className={`mx-auto ${isDownload ? 'hidden' : 'block'}`} ref={imageToShare} onLoad={() => setImageLoaded(true)} />
+                <img src={downloadImagePath} alt="result-img" className={`mx-auto ${isDownload ? 'block' : 'hidden'}`} ref={imageToShare} />
+                <img src={imagePath} alt="result-img" className={`mx-auto ${isDownload ? 'hidden' : 'block'}`} onLoad={() => setImageLoaded(true)} />
 
                 {imageLoaded && <>
                     {isDownload ?
