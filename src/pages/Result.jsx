@@ -5,12 +5,26 @@ import getImageUrl from "../helpers/getImageUrl";
 export default function Result() {
     const location = useLocation();
     const navigate = useNavigate();
-    let { result } = location.state;
+    const alertUser = (e) => {
+        e.preventDefault();
+        navigate("/", { replace: true })
+    };
 
-    if (result == null) {
-        navigate("/")
-        return null
-    }
+    useEffect(() => {
+        window.addEventListener("beforeunload", alertUser);
+        return () => {
+            window.removeEventListener("beforeunload", alertUser);
+        };
+    }, []);
+
+    useEffect(() => {
+        if (location.state == null) {
+            navigate("/", { replace: true })
+        }
+    }, [])
+
+    if (location.state == null) return null
+    const score = location.state.result
 
     window.scrollTo({
         top: 0,
@@ -20,15 +34,15 @@ export default function Result() {
     let role = 'knight'
     let extension = "svg"
 
-    if (result >= 0 && result <= 5) {
+    if (score >= 0 && score <= 5) {
         role = "knight"
-    } else if (result >= 6 && result <= 10) {
+    } else if (score >= 6 && score <= 10) {
         role = "wizard"
-    } else if (result >= 11 && result <= 15) {
+    } else if (score >= 11 && score <= 15) {
         role = "archer"
-    } else if (result >= 16 && result <= 20) {
+    } else if (score >= 16 && score <= 20) {
         role = "assassin"
-    } else if (result >= 21 && result <= 30) {
+    } else if (score >= 21 && score <= 30) {
         role = "trainer"
     }
 
