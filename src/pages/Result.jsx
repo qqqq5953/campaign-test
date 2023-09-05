@@ -5,9 +5,12 @@ import getImageUrl from "../helpers/getImageUrl";
 export default function Result() {
     const location = useLocation();
     const navigate = useNavigate();
+
     const alertUser = (e) => {
         e.preventDefault();
-        navigate("/", { replace: true })
+        if (location.state == null) {
+            navigate("/", { replace: true })
+        }
     };
 
     useEffect(() => {
@@ -23,7 +26,7 @@ export default function Result() {
         }
     }, [])
 
-    if (location.state == null) return null
+
     const score = location.state.result
 
     window.scrollTo({
