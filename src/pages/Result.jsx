@@ -1,18 +1,18 @@
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import getImageUrl from "../helpers/getImageUrl";
 
 export default function Result() {
     const location = useLocation();
     const navigate = useNavigate();
-    let { result } = location.state || { result: 0 };
+    let { result } = location.state;
 
     const [isDownload, setIsDownload] = useState(false)
 
-    // if (result == null) {
-    // navigate("/")
-    // return null
-    // }
+    if (result == null && import.meta.env.MODE === 'production') {
+        navigate("/")
+        return null
+    }
 
     window.scrollTo({
         top: 0,
@@ -20,8 +20,7 @@ export default function Result() {
     })
 
     result = 6
-    let role = ""
-    // let extension = ".svg"
+
     let imagePath = ""
 
     if (result >= 0 && result <= 5) {
@@ -50,25 +49,6 @@ export default function Result() {
         }
     }
 
-    // if (result >= 0 && result <= 5) {
-    //     role = "knight"
-    // } else if (result >= 6 && result <= 10) {
-    //     role = "wizard"
-    // } else if (result >= 11 && result <= 15) {
-    //     role = "archer"
-    // } else if (result >= 16 && result <= 20) {
-    //     role = "assassin"
-    // } else if (result >= 21 && result <= 30) {
-    //     role = "trainer"
-    // }
-
-    // if (isDownload) {
-    //     role = role + "_download"
-    //     extension = ".png"
-    // }
-
-    // const imagePath = "../src/assets/result-element/" + role + extension
-
     function shareToInsta() {
         window.open("https://www.instagram.com/create/story", "_self", "noreferrer")
     }
@@ -78,6 +58,29 @@ export default function Result() {
     const uri = isLocal ? "https://www.gaia.net/tc" : window.location.href
     const resultPageUri = encodeURI(uri)
 
+    // share api
+    const imageToShare = useRef(null)
+
+    async function shareFromAPI() {
+        const imageUrl = imageToShare.current.src;
+        const imageBlob = await fetch(imageUrl).then((response) => response.blob());
+        const imageFile = new File([imageBlob], "test.png", { type: "image/png" });
+
+        // Check if the browser supports the Web Share API
+        if (!navigator.canShare) return alert("您的瀏覽器不支援分享功能")
+
+        // Check if sharing files is supported
+        if (navigator.canShare({ files: [imageFile] })) {
+            try {
+                await navigator.share({ files: [imageFile] })
+            } catch (error) {
+                alert(`Error: ${error.message}`)
+            }
+        } else {
+            alert("您的瀏覽器不支援分享功能")
+        }
+    }
+
     return (
         <div className='px-4 pt-8 pb-36' style={{
             backgroundImage: `url(${getImageUrl('result-element', '375-bg')})`,
@@ -86,7 +89,7 @@ export default function Result() {
             backgroundRepeat: "repeat"
         }}>
             <div className='mx-auto max-w-[400px]'>
-                <img src={imagePath} alt="result-img" className='mx-auto' />
+                <img src={imagePath} alt="result-img" className='mx-auto' ref={imageToShare} />
                 {isDownload ?
                     <>
                         <div className=' text-white'>
@@ -95,19 +98,30 @@ export default function Result() {
 
                             <div className='flex space-x-2 py-4'>
                                 {/* instagram */}
+                                <button className='flex items-center justify-center border rounded-lg py-1.5 w-1/2' onClick={shareFromAPI}>
+                                    <img src={getImageUrl('result-element', 'ig')} alt="instagram" className='w-8 h-8' />
+                                    <span className='mx-2'>Instagram</span>
+                                </button>
+
+                                {/* facebook */}
+                                <button className='flex items-center justify-center border rounded-lg py-1.5 w-1/2' onClick={shareFromAPI}>
+                                    <img src={getImageUrl('result-element', 'fb')} alt="facebook" className='w-8 h-8' />
+                                    <span className='mx-2'>Facebook</span>
+                                </button>
+                            </div>
+                            {/* <div className='flex space-x-2 py-4'>
                                 <a href='https://www.instagram.com/create/story' className='flex items-center justify-center border rounded-lg py-1.5 w-1/2' target='blank'>
                                     <img src={getImageUrl('result-element', 'ig')} alt="instagram" className='w-8 h-8' />
                                     <span className='mx-2'>Instagram</span>
                                 </a>
 
-                                {/* facebook */}
                                 <div className="fb-share-button border rounded-lg w-1/2 py-1.5" data-href={resultPageUri} data-layout="" data-size="">
                                     <a target="_blank" href={`https://www.facebook.com/sharer/sharer.php?u=${resultPageUri}`} className="fb-xfbml-parse-ignore flex items-center justify-center">
                                         <img src={getImageUrl('result-element', 'fb')} alt="facebook" className='w-8 h-8' />
                                         <span className='mx-2'>Facebook</span>
                                     </a>
                                 </div>
-                            </div>
+                            </div> */}
                         </div>
                     </> :
                     <>
@@ -118,7 +132,7 @@ export default function Result() {
                     <p className='py-1.5'>蓋亞資訊</p>
                     <p>雲端服務整合專家</p>
                     <p className='py-4 text-xl'>GAIA INFORMATION TECHNOLOGY</p>
-                    <img src={getImageUrl('result-element', 'gaia_logo_white', 'svg')} alt={role} className='w-48 text-center inline-block pb-4' />
+                    <img src={getImageUrl('result-element', 'gaia_logo_white', 'svg')} alt="gaia-logo" className='w-48 text-center inline-block pb-4' />
                     <div className='text-xl'>
                         <p>提供企業一站式雲端整合顧問服務</p>
                         <p>24hr 中英雙語線上維運服務，</p>
