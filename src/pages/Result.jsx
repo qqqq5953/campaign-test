@@ -1,4 +1,4 @@
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useNavigationType, useBeforeUnload } from 'react-router-dom';
 import { useState, useRef, useMemo, useEffect } from 'react'
 import getImageUrl from "../helpers/getImageUrl";
 
@@ -6,27 +6,26 @@ export default function Result() {
     const location = useLocation();
     const navigate = useNavigate();
 
-    const alertUser = (e) => {
-        e.preventDefault();
-        if (location.state == null) {
+
+
+    const navigationType = useNavigationType()
+    useEffect(() => {
+        if (navigationType === "POP") {
             navigate("/", { replace: true })
         }
-    };
+    }, [navigationType])
 
-    useEffect(() => {
-        window.addEventListener("beforeunload", alertUser);
-        return () => {
-            window.removeEventListener("beforeunload", alertUser);
-        };
-    }, []);
+    // useBeforeUnload(() => {
+    //     navigate("/", { replace: true })
+    // });
 
-    useEffect(() => {
-        if (location.state == null) {
-            navigate("/", { replace: true })
-        }
-    }, [])
+    // useEffect(() => {
+    //     if (location.state == null) {
+    //         navigate("/", { replace: true })
+    //     }
+    // }, [])
 
-
+    // if (location.state == null) return null
     const score = location.state.result
 
     window.scrollTo({

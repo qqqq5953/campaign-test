@@ -11,9 +11,12 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <App />
       </HashRouter>
       :
-      <BrowserRouter>
+      <HashRouter>
         <App />
-      </BrowserRouter>
+      </HashRouter>
+      // <BrowserRouter>
+      //   <App />
+      // </BrowserRouter>
     }
   </React.StrictMode>
 )
