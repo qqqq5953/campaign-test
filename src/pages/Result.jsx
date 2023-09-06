@@ -71,7 +71,7 @@ export default function Result() {
     async function shareFromAPI() {
         const imageUrl = imageToShare.current.src;
         const imageBlob = await fetch(imageUrl).then((response) => response.blob());
-        const imageFile = new File([imageBlob], "test.png", { type: "image/png" });
+        const imageFile = new File([imageBlob], `${role}.png`, { type: "image/png" });
 
         // Check if the browser supports the Web Share API
         if (!navigator.canShare) return alert("您的瀏覽器不支援分享功能")
