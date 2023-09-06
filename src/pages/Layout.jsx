@@ -47,10 +47,6 @@ export default function Layout({ children }) {
             {mdSize && <img src={getImageUrl('background', '810-bg')} alt="Image description" className="w-full h-full object-cover hidden md:block lg:hidden" onLoad={() => setImageLoaded(true)} />}
             {smSize && <img src={getImageUrl('background', '375-bg')} alt="Image description" className="w-full h-full object-cover md:hidden" onLoad={() => setImageLoaded(true)} />}
 
-            {/* {lgSize && (!smSize || !mdSize) && <img src={getImageUrl('background', '1200-bg')} alt="Image description" className="w-full h-full object-cover hidden lg:block" onLoad={() => setImageLoaded(true)} />}
-            {mdSize && (!lgSize || !smSize) && <img src={getImageUrl('background', '810-bg')} alt="Image description" className="w-full h-full object-cover hidden md:block lg:hidden" onLoad={() => setImageLoaded(true)} />}
-            {smSize && (!lgSize || !mdSize) && <img src={getImageUrl('background', '375-bg')} alt="Image description" className="w-full h-full object-cover md:hidden" onLoad={() => setImageLoaded(true)} />} */}
-
             {imageLoaded && <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full px-5 max-w-[400px]">
                 {children}
             </div>}
