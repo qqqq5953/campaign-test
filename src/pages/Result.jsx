@@ -34,9 +34,9 @@ export default function Result() {
         role = "trainer"
     }
 
-    const imagePath = useMemo(() => {
-        return getImageUrl('result-element', role, "svg")
-    }, [])
+    // const imagePath = useMemo(() => {
+    //     return getImageUrl('result-element', role, "svg")
+    // }, [])
 
     const downloadImagePath = useMemo(() => {
         return getImageUrl('result-element', role + "_download")
@@ -48,27 +48,8 @@ export default function Result() {
 
     // share api
     const imageToShare = useRef(null)
-    async function shareFromAPI() {
-        const imageUrl = imageToShare.current.src;
-        const imageBlob = await fetch(imageUrl).then((response) => response.blob());
-        const imageFile = new File([imageBlob], `${role}.png`, { type: "image/png" });
 
-        // Check if the browser supports the Web Share API
-        if (!navigator.canShare) return alert("您的瀏覽器不支援分享功能")
-
-        // Check if sharing files is supported
-        if (navigator.canShare({ files: [imageFile] })) {
-            try {
-                await navigator.share({ files: [imageFile] })
-            } catch (error) {
-                if (error.name === "AbortError") return
-                alert(`Error: ${error.message}`)
-            }
-        } else {
-            alert("您的瀏覽器不支援分享功能")
-        }
-    }
-
+    // background on load
     const [isBgImgLoaded, setIsBgImgLoaded] = useState(false)
     const [backgroundImageSrc, setBackgroundImageSrc] = useState('');
 
@@ -133,7 +114,7 @@ export default function Result() {
                     <div className='text-white'>
                         <p className='py-3 text-center'>長按圖片進行下載</p>
                         <p className='text-center'>分享到社群邀請朋友測驗，尋找你的冒險夥伴！</p>
-                        {isMobile ? <MobileBtn /> : <WebBtn />}
+                        {isMobile ? <MobileBtn imageToShare={imageToShare} /> : <WebBtn />}
                     </div>
                     <img src={getImageUrl('result-element', 'divide')} alt="divide" className='my-16' />
                     <div className='text-center text-white'>
@@ -162,8 +143,7 @@ export default function Result() {
     )
 }
 
-function MobileBtn() {
-    const imageToShare = useRef(null)
+function MobileBtn({ imageToShare, role }) {
     async function shareFromAPI() {
         const imageUrl = imageToShare.current.src;
         const imageBlob = await fetch(imageUrl).then((response) => response.blob());
