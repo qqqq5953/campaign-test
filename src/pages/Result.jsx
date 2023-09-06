@@ -49,10 +49,10 @@ export default function Result() {
 
     // facebook
     const isProduction = import.meta.env.MODE === 'production'
-    const uri = isProduction ? window.location.origin : "https://www.gaia.net/tc"
-    const resultPageUri = encodeURI(uri)
+    // const uri = isProduction ? window.location.origin : "https://www.gaia.net/tc"
+    const resultPageUri = encodeURI(window.location.origin)
 
-    console.log(window.location);
+    console.log(import.meta.env.MODE);
 
     // share api
     const imageToShare = useRef(null)
