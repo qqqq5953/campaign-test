@@ -101,7 +101,8 @@ export default function Result() {
             backgroundImage: `url(${backgroundImageSrc})`,
             backgroundSize: "cover",
             backgroundPosition: "top center",
-            backgroundRepeat: "repeat"
+            backgroundRepeat: "repeat",
+            transform: 'translate3d(0,0,0)'
         }}>
             {isBgImgLoaded && <div className='mx-auto max-w-[400px]'>
                 <img src={downloadImagePath} alt="result-img" className="mx-auto" ref={imageToShare} onLoad={() => setImageLoaded(true)} />
