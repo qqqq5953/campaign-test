@@ -83,12 +83,19 @@ function Loading({ isLoading }) {
     const [loaderLoaded, setLoaderLoaded] = useState(false);
     const [woodLoaded, setWoodLoaded] = useState(false);
 
-    return <div className={isLoading ? 'block' : 'hidden'}>
-        {loaderLoaded && woodLoaded && <div className='absolute -top-1/3 -bottom-1/3 inset-x-0 -z-10 bg-white/40  rounded-xl mx-10'></div>}
+    return <div className={`bg-white/40 rounded-xl mx-5 pt-16 pb-16 space-y-4 ${isLoading ? 'block' : 'hidden'} `}>
+        <img src={getImageUrl('result-element', 'loader')} alt="loader" className='w-20 h-20 block mx-auto animate-bounce' />
+        <img src={getImageUrl('result-element', 'wood')} alt="loader" className='w-20 block mx-auto' />
+        <p className='text-center text-slate-800 pt-3'>正在收集結果...</p>
+        {/* <div className='absolute -top-1/3 -bottom-1/3 inset-x-0 -z-10 bg-white/40  rounded-xl mx-10'>
+            <div className='space-y-4 -mb-4 mt-8'>
+            </div>
+        </div> */}
+        {/* {loaderLoaded && woodLoaded && <div className='absolute -top-1/3 -bottom-1/3 inset-x-0 -z-10 bg-white/40  rounded-xl mx-10'></div>}
         <div className='space-y-4 -mb-4 mt-8'>
             <img src={getImageUrl('result-element', 'loader')} alt="loader" className='w-20 h-20 block mx-auto animate-bounce' onLoad={() => setLoaderLoaded(true)} />
             <img src={getImageUrl('result-element', 'wood')} alt="loader" className='w-20 block mx-auto' onLoad={() => setWoodLoaded(true)} />
             {loaderLoaded && woodLoaded && <p className='text-center text-slate-800 pt-3'>正在收集結果...</p>}
-        </div>
+        </div> */}
     </div>
 }
