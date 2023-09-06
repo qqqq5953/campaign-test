@@ -1,11 +1,18 @@
-import { useNavigate } from 'react-router-dom'
-import { useState } from "react"
+import { useNavigate, useNavigationType } from 'react-router-dom'
+import { useState, useEffect } from "react"
 import data from "../data.json"
 import getImageUrl from "../helpers/getImageUrl";
 import Layout from './Layout';
 
 export default function Quiz() {
     const [isLoading, setIsLoading] = useState(false)
+    const navigationType = useNavigationType()
+    const navigate = useNavigate();
+
+    // navigate to home page on refresh 
+    useEffect(() => {
+        if (navigationType === "POP") navigate("/", { replace: true })
+    }, [navigationType])
 
     return (
         <Layout>
@@ -73,9 +80,12 @@ function Loading() {
     const [loaderLoaded, setLoaderLoaded] = useState(false);
     const [woodLoaded, setWoodLoaded] = useState(false);
 
-    return <div className='bg-white/40 rounded-xl pt-16 pb-12 mx-5 space-y-5'>
-        <img src={getImageUrl('result-element', 'loader')} alt="loader" className='w-20 h-20 block mx-auto animate-bounce' onLoad={() => setLoaderLoaded(true)} />
-        <img src={getImageUrl('result-element', 'wood')} alt="loader" className='w-20 block mx-auto' onLoad={() => setWoodLoaded(true)} />
-        {loaderLoaded && woodLoaded && <p className='text-center text-slate-800 pt-3'>正在收集結果...</p>}
-    </div>
+    return <>
+        {loaderLoaded && woodLoaded && <div className='absolute -top-1/3 -bottom-1/3 inset-x-0 -z-10 bg-white/40  rounded-xl mx-10'></div>}
+        <div className='space-y-4 -mb-4 mt-8'>
+            <img src={getImageUrl('result-element', 'loader')} alt="loader" className='w-20 h-20 block mx-auto animate-bounce' onLoad={() => setLoaderLoaded(true)} />
+            <img src={getImageUrl('result-element', 'wood')} alt="loader" className='w-20 block mx-auto' onLoad={() => setWoodLoaded(true)} />
+            {loaderLoaded && woodLoaded && <p className='text-center text-slate-800 pt-3'>正在收集結果...</p>}
+        </div>
+    </>
 }
