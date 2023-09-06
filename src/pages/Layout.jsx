@@ -1,5 +1,5 @@
 import getImageUrl from "../helpers/getImageUrl";
-import { useEffect, useState } from "react"
+import { useEffect, useState, useRef } from "react"
 
 const lg = window.matchMedia("(min-width: 1200px)")
 const md = window.matchMedia("(min-width: 768px) and (max-width: 1199px)")
@@ -29,10 +29,16 @@ export default function Layout({ children }) {
         if (lg.matches) setLgSize(true)
     }
 
+    const layout = useRef(null)
+
     useEffect(() => {
         lg.addEventListener("change", handleLg)
         md.addEventListener("change", handleMd)
         sm.addEventListener("change", handleSm)
+
+        layout.current.addEventListener('touchmove', function (e) {
+            e.preventDefault(); //阻止默认的处理方式(阻止下拉滑动的效果)
+        }, { passive: false });
 
         return () => {
             lg.removeEventListener("change", handleLg)
@@ -42,7 +48,8 @@ export default function Layout({ children }) {
     }, [])
 
     return (
-        <div className="fixed inset-x-0 top-0 h-screen">
+        // fixed inset-x-0 top-0
+        <div className="relative h-screen" ref={layout}>
             {lgSize && <img src={getImageUrl('background', '1200-bg')} alt="Image description" className="w-full h-full object-cover hidden lg:block" onLoad={() => setImageLoaded(true)} />}
             {mdSize && <img src={getImageUrl('background', '810-bg')} alt="Image description" className="w-full h-full object-cover hidden md:block lg:hidden" onLoad={() => setImageLoaded(true)} />}
             {smSize && <img src={getImageUrl('background', '375-bg')} alt="Image description" className="w-full h-full object-cover md:hidden" onLoad={() => setImageLoaded(true)} />}
