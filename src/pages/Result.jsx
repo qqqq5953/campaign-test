@@ -21,7 +21,6 @@ export default function Result() {
     })
 
     let role = 'knight'
-    let extension = "svg"
 
     if (score >= 0 && score <= 5) {
         role = "knight"
@@ -36,23 +35,16 @@ export default function Result() {
     }
 
     const imagePath = useMemo(() => {
-        return getImageUrl('result-element', role, extension)
+        return getImageUrl('result-element', role, "svg")
     }, [])
 
     const downloadImagePath = useMemo(() => {
-        return getImageUrl('result-element', role + "_download", "png")
+        return getImageUrl('result-element', role + "_download")
     }, [])
 
     // function shareToInsta() {
     //     window.open("https://www.instagram.com/create/story", "_self", "noreferrer")
     // }
-
-    // facebook
-    const isProduction = import.meta.env.MODE === 'production'
-    // const uri = isProduction ? window.location.origin : "https://www.gaia.net/tc"
-    const resultPageUri = encodeURI(window.location.origin)
-
-    console.log(import.meta.env.MODE);
 
     // share api
     const imageToShare = useRef(null)
@@ -118,8 +110,8 @@ export default function Result() {
                 {imageLoaded && <>
                     {isDownload ?
                         <div className='text-white'>
-                            <p className='py-3 text-center'>長按圖片進行下載</p>
-                            <p className='text-center'>分享到社群邀請朋友測驗，尋找你的冒險夥伴！</p>
+                            <p className='py-3 text-center'>長按圖片進行下載{window.location.origin}</p>
+                            <p className='text-center'>分享到社群邀請朋友測驗，尋找你的冒險夥伴！{encodeURI(window.location.origin)}</p>
 
                             {/* instagram */}
                             {/* <button className='flex items-center justify-center border rounded-lg py-1.5 w-1/2' onClick={shareFromAPI}>
@@ -147,8 +139,8 @@ export default function Result() {
                                         <span className='mx-2'>Instagram</span>
                                     </a>
 
-                                    <div className="fb-share-button border rounded-lg w-1/2 py-1.5" data-href={resultPageUri} data-layout="" data-size="">
-                                        <a target="_blank" href={`https://www.facebook.com/sharer/sharer.php?u=${resultPageUri}`} className="fb-xfbml-parse-ignore flex items-center justify-center">
+                                    <div className="fb-share-button border rounded-lg w-1/2 py-1.5" data-href={encodeURI(window.location.origin)} data-layout="" data-size="">
+                                        <a target="_blank" href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURI(window.location.origin)}`} className="fb-xfbml-parse-ignore flex items-center justify-center">
                                             <img src={getImageUrl('result-element', 'fb')} alt="facebook" className='w-8 h-8' />
                                             <span className='mx-2'>Facebook</span>
                                         </a>
