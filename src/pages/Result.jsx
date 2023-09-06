@@ -110,8 +110,8 @@ export default function Result() {
                 {imageLoaded && <>
                     {isDownload ?
                         <div className='text-white'>
-                            <p className='py-3 text-center'>長按圖片進行下載{window.location.origin}</p>
-                            <p className='text-center'>分享到社群邀請朋友測驗，尋找你的冒險夥伴！{encodeURI(window.location.origin)}</p>
+                            <p className='py-3 text-center'>長按圖片進行下載</p>
+                            <p className='text-center'>分享到社群邀請朋友測驗，尋找你的冒險夥伴！</p>
 
                             {/* instagram */}
                             {/* <button className='flex items-center justify-center border rounded-lg py-1.5 w-1/2' onClick={shareFromAPI}>
@@ -139,8 +139,8 @@ export default function Result() {
                                         <span className='mx-2'>Instagram</span>
                                     </a>
 
-                                    <div className="fb-share-button border rounded-lg w-1/2 py-1.5" data-href={encodeURI(window.location.origin)} data-layout="" data-size="">
-                                        <a target="_blank" href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURI(window.location.origin)}`} className="fb-xfbml-parse-ignore flex items-center justify-center">
+                                    <div className="fb-share-button border rounded-lg w-1/2 py-1.5" data-href={encodeURI(window.location.origin + '/campaign-test')} data-layout="" data-size="">
+                                        <a target="_blank" href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURI(window.location.origin + '/campaign-test')}`} className="fb-xfbml-parse-ignore flex items-center justify-center">
                                             <img src={getImageUrl('result-element', 'fb')} alt="facebook" className='w-8 h-8' />
                                             <span className='mx-2'>Facebook</span>
                                         </a>
