@@ -87,7 +87,7 @@ export default function Result() {
     }, []);
 
     const [imageLoaded, setImageLoaded] = useState(false);
-    const [isDownload, setIsDownload] = useState(false)
+    // const [isDownload, setIsDownload] = useState(false)
 
     const isMobile = useMemo(() => {
         const userAgent = navigator.userAgent || navigator.platform;
@@ -104,53 +104,36 @@ export default function Result() {
             backgroundRepeat: "repeat"
         }}>
             {isBgImgLoaded && <div className='mx-auto max-w-[400px]'>
-                <img src={downloadImagePath} alt="result-img" className={`mx-auto ${isDownload ? 'block' : 'hidden'}`} ref={imageToShare} />
-                <img src={imagePath} alt="result-img" className={`mx-auto ${isDownload ? 'hidden' : 'block'}`} onLoad={() => setImageLoaded(true)} />
+                <img src={downloadImagePath} alt="result-img" className="mx-auto" ref={imageToShare} onLoad={() => setImageLoaded(true)} />
+                {/* <img src={downloadImagePath} alt="result-img" className={`mx-auto ${isDownload ? 'block' : 'hidden'}`} ref={imageToShare} />
+                <img src={imagePath} alt="result-img" className={`mx-auto ${isDownload ? 'hidden' : 'block'}`} onLoad={() => setImageLoaded(true)} /> */}
+
+                {/* instagram */}
+                {/* <button className='flex items-center justify-center border rounded-lg py-1.5 w-1/2' onClick={shareFromAPI}>
+                    <img src={getImageUrl('result-element', 'ig')} alt="instagram" className='w-8 h-8' />
+                    <span className='mx-2'>Instagram</span>
+                </button> */}
+
+                {/* facebook */}
+                {/* <button className='flex items-center justify-center border rounded-lg py-1.5 w-1/2' onClick={shareFromAPI}>
+                    <img src={getImageUrl('result-element', 'fb')} alt="facebook" className='w-8 h-8' />
+                    <span className='mx-2'>Facebook</span>
+                </button> */}
 
                 {imageLoaded && <>
-                    {isDownload ?
+                    {/* {isDownload ?
                         <div className='text-white'>
                             <p className='py-3 text-center'>長按圖片進行下載</p>
                             <p className='text-center'>分享到社群邀請朋友測驗，尋找你的冒險夥伴！</p>
-
-                            {/* instagram */}
-                            {/* <button className='flex items-center justify-center border rounded-lg py-1.5 w-1/2' onClick={shareFromAPI}>
-                                <img src={getImageUrl('result-element', 'ig')} alt="instagram" className='w-8 h-8' />
-                                <span className='mx-2'>Instagram</span>
-                            </button> */}
-
-                            {/* facebook */}
-                            {/* <button className='flex items-center justify-center border rounded-lg py-1.5 w-1/2' onClick={shareFromAPI}>
-                                <img src={getImageUrl('result-element', 'fb')} alt="facebook" className='w-8 h-8' />
-                                <span className='mx-2'>Facebook</span>
-                            </button> */}
-
-                            {isMobile ?
-                                <div className='flex space-x-2 py-4'>
-                                    <button className='flex items-center justify-center border rounded-lg py-4 w-full' onClick={shareFromAPI}>
-                                        <i className="fa-solid fa-xl fa-share-nodes "></i>
-                                        <span className='mx-3'>分享至社群</span>
-                                    </button>
-                                </div>
-                                :
-                                <div className='flex space-x-2 py-4'>
-                                    <a href='https://www.instagram.com/create/story' className='flex items-center justify-center border rounded-lg py-1.5 w-1/2' target='blank'>
-                                        <img src={getImageUrl('result-element', 'ig')} alt="instagram" className='w-8 h-8' />
-                                        <span className='mx-2'>Instagram</span>
-                                    </a>
-
-                                    <div className="fb-share-button border rounded-lg w-1/2 py-1.5" data-href={encodeURI(window.location.origin + '/campaign-test')} data-layout="" data-size="">
-                                        <a target="_blank" href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURI(window.location.origin + '/campaign-test')}`} className="fb-xfbml-parse-ignore flex items-center justify-center">
-                                            <img src={getImageUrl('result-element', 'fb')} alt="facebook" className='w-8 h-8' />
-                                            <span className='mx-2'>Facebook</span>
-                                        </a>
-                                    </div>
-                                </div>
-                            }
-
+                            {isMobile ? <MobileBtn /> : <WebBtn />}
                         </div> :
                         <button className='rounded-full bg-white w-full py-4 mt-6' onClick={() => setIsDownload(true)}>取得結果圖</button>
-                    }
+                    } */}
+                    <div className='text-white'>
+                        <p className='py-3 text-center'>長按圖片進行下載</p>
+                        <p className='text-center'>分享到社群邀請朋友測驗，尋找你的冒險夥伴！</p>
+                        {isMobile ? <MobileBtn /> : <WebBtn />}
+                    </div>
                     <img src={getImageUrl('result-element', 'divide')} alt="divide" className='my-16' />
                     <div className='text-center text-white'>
                         <p className='py-1.5'>蓋亞資訊</p>
@@ -176,4 +159,51 @@ export default function Result() {
             </div>}
         </div >
     )
+}
+
+function MobileBtn() {
+    const imageToShare = useRef(null)
+    async function shareFromAPI() {
+        const imageUrl = imageToShare.current.src;
+        const imageBlob = await fetch(imageUrl).then((response) => response.blob());
+        const imageFile = new File([imageBlob], `${role}.png`, { type: "image/png" });
+
+        // Check if the browser supports the Web Share API
+        if (!navigator.canShare) return alert("您的瀏覽器不支援分享功能")
+
+        // Check if sharing files is supported
+        if (navigator.canShare({ files: [imageFile] })) {
+            try {
+                await navigator.share({ files: [imageFile] })
+            } catch (error) {
+                if (error.name === "AbortError") return
+                alert(`Error: ${error.message}`)
+            }
+        } else {
+            alert("您的瀏覽器不支援分享功能")
+        }
+    }
+
+    return <div className='flex space-x-2 py-4'>
+        <button className='flex items-center justify-center border rounded-lg py-4 w-full' onClick={shareFromAPI}>
+            <i className="fa-solid fa-xl fa-share-nodes "></i>
+            <span className='mx-3'>分享至社群</span>
+        </button>
+    </div>
+}
+
+function WebBtn() {
+    return <div className='flex space-x-2 py-4'>
+        <a href='https://www.instagram.com/create/story' className='flex items-center justify-center border rounded-lg py-1.5 w-1/2' target='blank'>
+            <img src={getImageUrl('result-element', 'ig')} alt="instagram" className='w-8 h-8' />
+            <span className='mx-2'>Instagram</span>
+        </a>
+
+        <div className="fb-share-button border rounded-lg w-1/2 py-1.5" data-href={encodeURI(window.location.origin + '/campaign-test')} data-layout="" data-size="">
+            <a target="_blank" href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURI(window.location.origin + '/campaign-test')}`} className="fb-xfbml-parse-ignore flex items-center justify-center">
+                <img src={getImageUrl('result-element', 'fb')} alt="facebook" className='w-8 h-8' />
+                <span className='mx-2'>Facebook</span>
+            </a>
+        </div>
+    </div>
 }
