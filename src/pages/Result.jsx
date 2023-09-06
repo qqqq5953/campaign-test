@@ -115,31 +115,36 @@ export default function Result() {
                             <p>分享到社群邀請朋友測驗，尋找你的冒險夥伴！</p>
 
                             <div className='flex space-x-2 py-4'>
-                                {/* instagram */}
-                                <button className='flex items-center justify-center border rounded-lg py-1.5 w-1/2' onClick={shareFromAPI}>
-                                    <img src={getImageUrl('result-element', 'ig')} alt="instagram" className='w-8 h-8' />
-                                    <span className='mx-2'>Instagram</span>
+                                <button className='flex items-center justify-center border rounded-lg py-4 w-full' onClick={shareFromAPI}>
+                                    <i class="fa-solid fa-xl fa-share-nodes "></i>
+                                    <span className='mx-3'>分享至社群</span>
                                 </button>
 
+                                {/* instagram */}
+                                {/* <button className='flex items-center justify-center border rounded-lg py-1.5 w-1/2' onClick={shareFromAPI}>
+                                    <img src={getImageUrl('result-element', 'ig')} alt="instagram" className='w-8 h-8' />
+                                    <span className='mx-2'>Instagram</span>
+                                </button> */}
+
                                 {/* facebook */}
-                                <button className='flex items-center justify-center border rounded-lg py-1.5 w-1/2' onClick={shareFromAPI}>
+                                {/* <button className='flex items-center justify-center border rounded-lg py-1.5 w-1/2' onClick={shareFromAPI}>
                                     <img src={getImageUrl('result-element', 'fb')} alt="facebook" className='w-8 h-8' />
                                     <span className='mx-2'>Facebook</span>
-                                </button>
+                                </button> */}
                             </div>
                             {/* <div className='flex space-x-2 py-4'>
-                                                    <a href='https://www.instagram.com/create/story' className='flex items-center justify-center border rounded-lg py-1.5 w-1/2' target='blank'>
-                                                        <img src={getImageUrl('result-element', 'ig')} alt="instagram" className='w-8 h-8' />
-                                                        <span className='mx-2'>Instagram</span>
-                                                    </a>
-                    
-                                                    <div className="fb-share-button border rounded-lg w-1/2 py-1.5" data-href={resultPageUri} data-layout="" data-size="">
-                                                        <a target="_blank" href={`https://www.facebook.com/sharer/sharer.php?u=${resultPageUri}`} className="fb-xfbml-parse-ignore flex items-center justify-center">
-                                                            <img src={getImageUrl('result-element', 'fb')} alt="facebook" className='w-8 h-8' />
-                                                            <span className='mx-2'>Facebook</span>
-                                                        </a>
-                                                    </div>
-                                                </div> */}
+                                <a href='https://www.instagram.com/create/story' className='flex items-center justify-center border rounded-lg py-1.5 w-1/2' target='blank'>
+                                    <img src={getImageUrl('result-element', 'ig')} alt="instagram" className='w-8 h-8' />
+                                    <span className='mx-2'>Instagram</span>
+                                </a>
+
+                                <div className="fb-share-button border rounded-lg w-1/2 py-1.5" data-href={resultPageUri} data-layout="" data-size="">
+                                    <a target="_blank" href={`https://www.facebook.com/sharer/sharer.php?u=${resultPageUri}`} className="fb-xfbml-parse-ignore flex items-center justify-center">
+                                        <img src={getImageUrl('result-element', 'fb')} alt="facebook" className='w-8 h-8' />
+                                        <span className='mx-2'>Facebook</span>
+                                    </a>
+                                </div>
+                            </div> */}
                         </div> :
                         <button className='rounded-full bg-white w-full py-4 mt-6' onClick={() => setIsDownload(true)}>取得結果圖</button>
                     }
