@@ -2,6 +2,8 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useState, useRef, useMemo, useEffect } from 'react'
 import getImageUrl from "../helpers/getImageUrl";
 
+
+
 export default function Result() {
     const location = useLocation();
     const navigate = useNavigate();
@@ -79,9 +81,12 @@ export default function Result() {
     const [backgroundImageSrc, setBackgroundImageSrc] = useState('');
 
     useEffect(() => {
+        const sm = window.matchMedia("(max-width: 767px)")
+        const bgImageName = sm.matches ? '375-bg' : '1200-bg'
+        const imageUrl = getImageUrl('result-element', bgImageName);
+
         // Load the background image when the component mounts
         const backgroundImage = new Image();
-        const imageUrl = getImageUrl('result-element', '375-bg');
         backgroundImage.onload = function () {
             setIsBgImgLoaded(true);
         };
