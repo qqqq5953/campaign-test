@@ -2,8 +2,6 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useState, useRef, useMemo, useEffect } from 'react'
 import getImageUrl from "../helpers/getImageUrl";
 
-
-
 export default function Result() {
     const location = useLocation();
     const navigate = useNavigate();
@@ -50,9 +48,11 @@ export default function Result() {
     // }
 
     // facebook
-    const isLocal = window.location.protocol.includes('http')
-    const uri = isLocal ? "https://www.gaia.net/tc" : window.location.href
+    const isProduction = import.meta.env.MODE === 'production'
+    const uri = isProduction ? window.location.origin : "https://www.gaia.net/tc"
     const resultPageUri = encodeURI(uri)
+
+    console.log(window.location);
 
     // share api
     const imageToShare = useRef(null)
@@ -97,27 +97,12 @@ export default function Result() {
     const [imageLoaded, setImageLoaded] = useState(false);
     const [isDownload, setIsDownload] = useState(false)
 
-    const isiOS13 = useMemo(() => {
-        return navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1;
+    const isMobile = useMemo(() => {
+        const userAgent = navigator.userAgent || navigator.platform;
+        const isiOS13 = navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1
+        if (/Android|iPad|iPhone/i.test(userAgent) || isiOS13) return true;
+        return false;
     }, []);
-
-    const mobileOperatingSystem = useMemo(() => {
-        var userAgent = navigator.userAgent || navigator.platform;
-        if (/android/i.test(userAgent)) return "Android";
-        if (/iPad|iPhone/.test(userAgent) || isiOS13) return "iOS";
-        return null;
-    }, []);
-
-    // console.log('mobileOperatingSystem', mobileOperatingSystem);
-
-    const [isMobile, setIsMobile] = useState(false)
-
-    useEffect(() => {
-        if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|BB|PlayBook|IEMobile|Windows Phone|Kindle|Silk|Opera Mini/i.test(navigator.userAgent)) {
-            setIsMobile(true)
-        }
-    }, [])
-
 
     return (
         <div className='px-4 pt-8 pb-36' style={{
