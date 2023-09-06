@@ -110,9 +110,9 @@ export default function Result() {
 
                 {imageLoaded && <>
                     {isDownload ?
-                        <div className=' text-white'>
+                        <div className='text-white'>
                             <p className='py-3 text-center'>長按圖片進行下載</p>
-                            <p>分享到社群邀請朋友測驗，尋找你的冒險夥伴！</p>
+                            <p className='text-center'>分享到社群邀請朋友測驗，尋找你的冒險夥伴！</p>
 
                             <div className='flex space-x-2 py-4'>
                                 <button className='flex items-center justify-center border rounded-lg py-4 w-full' onClick={shareFromAPI}>
