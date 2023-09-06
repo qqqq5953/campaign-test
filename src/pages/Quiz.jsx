@@ -17,7 +17,10 @@ export default function Quiz() {
     return (
         <Layout>
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[500px] md px-5">
-                {isLoading ? <Loading /> : <Questions setIsLoading={setIsLoading} />}
+                {/* {isLoading ? <Loading isLoading={isLoading} /> : <Questions isLoading={isLoading} setIsLoading={setIsLoading} />} */}
+
+                <Loading isLoading={isLoading} />
+                <Questions isLoading={isLoading} setIsLoading={setIsLoading} />
             </div>
         </Layout>
     )
@@ -25,7 +28,7 @@ export default function Quiz() {
 
 let sum = 0
 
-function Questions({ setIsLoading }) {
+function Questions({ isLoading, setIsLoading }) {
     const [imageLoaded, setImageLoaded] = useState(false);
     const [questionIndex, setQuestionIndex] = useState(0)
     const currentQuestion = data[questionIndex]
@@ -53,7 +56,7 @@ function Questions({ setIsLoading }) {
         }
     }
 
-    return <>
+    return <div className={isLoading ? 'hidden' : 'block'}>
         <img src={getImageUrl('quiz', 'poster')} alt="poster" onLoad={() => setImageLoaded(true)} className={imageLoaded ? 'block' : 'hidden'} />
         {imageLoaded && <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 h-full w-2/3">
             <div className="relative h-full mx-6 text-sm md:text-base">
@@ -73,19 +76,19 @@ function Questions({ setIsLoading }) {
                 </div>
             </div>
         </div>}
-    </>
+    </div>
 }
 
-function Loading() {
+function Loading({ isLoading }) {
     const [loaderLoaded, setLoaderLoaded] = useState(false);
     const [woodLoaded, setWoodLoaded] = useState(false);
 
-    return <>
+    return <div className={isLoading ? 'block' : 'hidden'}>
         {loaderLoaded && woodLoaded && <div className='absolute -top-1/3 -bottom-1/3 inset-x-0 -z-10 bg-white/40  rounded-xl mx-10'></div>}
         <div className='space-y-4 -mb-4 mt-8'>
             <img src={getImageUrl('result-element', 'loader')} alt="loader" className='w-20 h-20 block mx-auto animate-bounce' onLoad={() => setLoaderLoaded(true)} />
             <img src={getImageUrl('result-element', 'wood')} alt="loader" className='w-20 block mx-auto' onLoad={() => setWoodLoaded(true)} />
             {loaderLoaded && woodLoaded && <p className='text-center text-slate-800 pt-3'>正在收集結果...</p>}
         </div>
-    </>
+    </div>
 }
