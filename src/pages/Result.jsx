@@ -77,13 +77,28 @@ export default function Result() {
         return false;
     }, []);
 
+    useEffect(() => {
+        document.body.addEventListener('touchmove', function (e) {
+            if ((window.innerHeight + window.pageYOffset) >= document.body.offsetHeight) {
+                e.preventDefault();
+            }
+        }, { passive: false });
+
+        return () => {
+            document.body.removeEventListener('touchmove', function (e) {
+                if (e.currentTarget.scrollHeight === e.currentTarget.clientHeight) {
+                    e.preventDefault();
+                }
+            });
+        };
+    }, []);
+
     return (
         <div className='px-4 pt-8 pb-36' style={{
             backgroundImage: `url(${backgroundImageSrc})`,
             backgroundSize: "cover",
             backgroundPosition: "top center",
             backgroundRepeat: "repeat",
-            transform: 'translate3d(0,0,0)'
         }}>
             {isBgImgLoaded && <div className='mx-auto max-w-[400px]'>
                 <img src={downloadImagePath} alt="result-img" className="mx-auto" ref={imageToShare} onLoad={() => setImageLoaded(true)} />
