@@ -42,18 +42,24 @@ function Questions({ isLoading, setIsLoading }) {
         })
     }
 
+    const [isVisible, setIsVisible] = useState(true);
+
     async function next(id, weight) {
         sum += weight
 
         if (id <= 9) {
-            setQuestionIndex(q => q + 1)
+            setIsVisible(!isVisible);
+            setTimeout(() => {
+                setIsVisible(isVisible);
+                setQuestionIndex(q => q + 1)
+            }, 300);
         } else {
             await simulateCalculation()
             navigate("/result", { state: { result: sum } })
         }
     }
 
-    return <div className={isLoading ? 'hidden' : 'block'}>
+    return <div className={`${isLoading ? 'hidden' : 'block'} transition-opacity ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
         <img src={getImageUrl('quiz', 'poster')} alt="poster" onLoad={() => setImageLoaded(true)} className={imageLoaded ? 'block' : 'hidden'} />
         {imageLoaded && <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 h-full w-2/3">
             <div className="relative h-full mx-6 text-sm md:text-base">
