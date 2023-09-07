@@ -78,7 +78,7 @@ export default function Result() {
     }, []);
 
     return (
-        <div className='px-4 pt-8 pb-36 overscroll-none' style={{
+        <div className='px-4 pt-8 pb-36' style={{
             backgroundImage: `url(${backgroundImageSrc})`,
             backgroundSize: "cover",
             backgroundPosition: "top center",
