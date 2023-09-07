@@ -108,7 +108,10 @@ section {
 body {
   line-height: 1;
   box-sizing: border-box;
-  overscroll-behavior: none;
+  height: 1vh;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  /* overscroll-behavior: none; */
 }
 
 ol,
