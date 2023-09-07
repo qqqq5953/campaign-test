@@ -1,14 +1,9 @@
 import getImageUrl from "../helpers/getImageUrl";
 import { useEffect, useState, useRef } from "react"
-import inobounce from "inobounce"
-
-inobounce.enable();
 
 const lg = window.matchMedia("(min-width: 1200px)")
 const md = window.matchMedia("(min-width: 768px) and (max-width: 1199px)")
 const sm = window.matchMedia("(max-width: 767px)")
-
-alert(`isEnabled:${inobounce.isEnabled()}, isScrollSupported: ${inobounce.isScrollSupported}`)
 
 export default function Layout({ children }) {
     const [imageLoaded, setImageLoaded] = useState(false);
@@ -54,7 +49,7 @@ export default function Layout({ children }) {
 
     return (
         // fixed inset-x-0 top-0
-        <div className="relative h-screen" ref={layout}>
+        <div className="relative h-screen overscroll-none" ref={layout}>
             {lgSize && <img src={getImageUrl('background', '1200-bg')} alt="Image description" className="w-full h-full object-cover hidden lg:block" onLoad={() => setImageLoaded(true)} />}
             {mdSize && <img src={getImageUrl('background', '810-bg')} alt="Image description" className="w-full h-full object-cover hidden md:block lg:hidden" onLoad={() => setImageLoaded(true)} />}
             {smSize && <img src={getImageUrl('background', '375-bg')} alt="Image description" className="w-full h-full object-cover md:hidden" onLoad={() => setImageLoaded(true)} />}
