@@ -5,92 +5,49 @@ import getImageUrl from "../helpers/getImageUrl";
 export default function Result() {
     const location = useLocation();
     const navigate = useNavigate();
-
-    useEffect(() => {
-        if (location.state == null) {
-            navigate("/", { replace: true })
-        }
-    }, [])
-
-    if (location.state == null) return null
-    const score = location.state.result
-
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-    })
-
-    let role = 'knight'
-
-    if (score >= 0 && score <= 5) {
-        role = "knight"
-    } else if (score >= 6 && score <= 10) {
-        role = "wizard"
-    } else if (score >= 11 && score <= 15) {
-        role = "archer"
-    } else if (score >= 16 && score <= 20) {
-        role = "assassin"
-    } else if (score >= 21 && score <= 30) {
-        role = "trainer"
-    }
-
-    // const imagePath = useMemo(() => {
-    //     return getImageUrl('result-element', role, "svg")
-    // }, [])
-
-    const downloadImagePath = useMemo(() => {
-        return getImageUrl('result-element', role + "_download")
-    }, [])
-
-    // function shareToInsta() {
-    //     window.open("https://www.instagram.com/create/story", "_self", "noreferrer")
-    // }
-
-    // share api
     const imageToShare = useRef(null)
 
-    // background on load
+    const [imageLoaded, setImageLoaded] = useState(false);
     const [isBgImgLoaded, setIsBgImgLoaded] = useState(false)
     const [backgroundImageSrc, setBackgroundImageSrc] = useState('');
 
     useEffect(() => {
-        const sm = window.matchMedia("(max-width: 767px)")
-        const bgImageName = sm.matches ? '375-bg' : '1200-bg'
-        const imageUrl = getImageUrl('result-element', bgImageName);
+        if (location.state != null) {
+            const sm = window.matchMedia("(max-width: 767px)")
+            const bgImageName = sm.matches ? '375-bg' : '1200-bg'
+            const imageUrl = getImageUrl('result-element', bgImageName);
 
-        // Load the background image when the component mounts
-        const backgroundImage = new Image();
-        backgroundImage.onload = function () {
-            setIsBgImgLoaded(true);
-        };
-        backgroundImage.src = imageUrl;
-        setBackgroundImageSrc(imageUrl);
+            // Load the background image when the component mounts
+            const backgroundImage = new Image();
+            backgroundImage.onload = function () {
+                setIsBgImgLoaded(true);
+            };
+            backgroundImage.src = imageUrl;
+            setBackgroundImageSrc(imageUrl);
+        } else {
+            navigate("/", { replace: true })
+        }
     }, []);
 
-    const [imageLoaded, setImageLoaded] = useState(false);
-    // const [isDownload, setIsDownload] = useState(false)
+    if (location.state == null) return null
+
+    const score = useMemo(() => {
+        return location.state.result
+    }, [location.state.result])
+
+    const imageName = useMemo(() => {
+        return getRoleImage(score)
+    }, [])
+
+    const downloadImagePath = useMemo(() => {
+        return getImageUrl('result-element', imageName)
+    }, [])
 
     const isMobile = useMemo(() => {
         const userAgent = navigator.userAgent || navigator.platform;
         const isiOS13 = navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1
         if (/Android|iPad|iPhone/i.test(userAgent) || isiOS13) return true;
         return false;
-    }, []);
-
-    useEffect(() => {
-        document.body.addEventListener('touchmove', function (e) {
-            if ((window.innerHeight + window.pageYOffset) >= document.body.offsetHeight) {
-                e.preventDefault();
-            }
-        }, { passive: false });
-
-        return () => {
-            document.body.removeEventListener('touchmove', function (e) {
-                if (e.currentTarget.scrollHeight === e.currentTarget.clientHeight) {
-                    e.preventDefault();
-                }
-            });
-        };
     }, []);
 
     return (
@@ -202,4 +159,22 @@ function WebBtn() {
             </a>
         </div>
     </div>
+}
+
+function getRoleImage(score) {
+    let imageName = ''
+
+    if (score >= 0 && score <= 5) {
+        imageName = "knight"
+    } else if (score >= 6 && score <= 10) {
+        imageName = "wizard"
+    } else if (score >= 11 && score <= 15) {
+        imageName = "archer"
+    } else if (score >= 16 && score <= 20) {
+        imageName = "assassin"
+    } else if (score >= 21 && score <= 30) {
+        imageName = "trainer"
+    }
+
+    return imageName + "_download"
 }
