@@ -146,14 +146,16 @@ function MobileBtn({ imageToShare, role }) {
 }
 
 function WebBtn() {
+    const fbShareLink = useMemo(() => encodeURI(window.location.origin + '/campaign-test'), [])
+
     return <div className='flex space-x-2 py-4'>
         <a href='https://www.instagram.com/create/story' className='flex items-center justify-center border rounded-lg py-1.5 w-1/2' target='blank'>
             <img src={getImageUrl('result-element', 'ig')} alt="instagram" className='w-8 h-8' />
             <span className='mx-2'>Instagram</span>
         </a>
 
-        <div className="fb-share-button border rounded-lg w-1/2 py-1.5" data-href={encodeURI(window.location.origin + '/campaign-test')} data-layout="" data-size="">
-            <a target="_blank" href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURI(window.location.origin + '/campaign-test')}`} className="fb-xfbml-parse-ignore flex items-center justify-center">
+        <div className="fb-share-button border rounded-lg w-1/2 py-1.5" data-href={fbShareLink} data-layout="" data-size="">
+            <a target="_blank" href={`https://www.facebook.com/sharer/sharer.php?u=${fbShareLink}`} className="fb-xfbml-parse-ignore flex items-center justify-center">
                 <img src={getImageUrl('result-element', 'fb')} alt="facebook" className='w-8 h-8' />
                 <span className='mx-2'>Facebook</span>
             </a>
