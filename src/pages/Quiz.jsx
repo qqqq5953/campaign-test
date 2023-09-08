@@ -64,7 +64,7 @@ function Questions({ isLoading, setIsLoading }) {
         {imageLoaded && <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 h-full w-2/3">
             <div className="relative h-full mx-6 text-sm md:text-base">
                 {/* 題目 */}
-                <div className="absolute top-12 md:top-[12%] w-full py-1">
+                <div className="absolute top-[19%] md:top-[12%] w-full py-1">
                     <img
                         src={getImageUrl('quiz', currentQuestion.label)}
                         alt="label" className="block h-8" />
