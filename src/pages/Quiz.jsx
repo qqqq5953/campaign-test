@@ -64,7 +64,7 @@ function Questions({ isLoading, setIsLoading }) {
         {imageLoaded && <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 h-full w-2/3">
             <div className="relative h-full mx-6 text-sm md:text-base">
                 {/* 題目 */}
-                <div className="absolute top-[19%] md:top-[12%] w-full py-1">
+                <div className="absolute top-[17%] sm:top-[19%] md:top-[12%] w-full">
                     <img
                         src={getImageUrl('quiz', currentQuestion.label)}
                         alt="label" className="block h-8" />
@@ -72,7 +72,7 @@ function Questions({ isLoading, setIsLoading }) {
                 </div>
 
                 {/* 選項 */}
-                <div className="absolute bottom-16 md:top-1/2 md:-translate-y-1/3 md: w-full space-y-2 md:space-y-3">
+                <div className="absolute bottom-12 sm:bottom-16 md:bottom-0 md:top-1/2 md:-translate-y-1/4 w-full space-y-2 md:space-y-3">
                     {currentQuestion.answers.map(answer =>
                         <button className="rounded-full py-2.5 w-full bg-white" key={answer.weight} onClick={() => next(currentQuestion.id, answer.weight)}>{answer.content}</button>
                     )}
