@@ -1,4 +1,4 @@
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, Link } from 'react-router-dom';
 import { useState, useRef, useMemo, useEffect } from 'react'
 import getImageUrl from "../helpers/getImageUrl";
 
@@ -58,35 +58,14 @@ export default function Result() {
             backgroundRepeat: "repeat",
         }}>
             {isBgImgLoaded && <div className='mx-auto max-w-[400px]'>
-                <img src={downloadImagePath} alt="result-img" className="mx-auto" ref={imageToShare} onLoad={() => setImageLoaded(true)} />
-                {/* <img src={downloadImagePath} alt="result-img" className={`mx-auto ${isDownload ? 'block' : 'hidden'}`} ref={imageToShare} />
-                <img src={imagePath} alt="result-img" className={`mx-auto ${isDownload ? 'hidden' : 'block'}`} onLoad={() => setImageLoaded(true)} /> */}
-
-                {/* instagram */}
-                {/* <button className='flex items-center justify-center border rounded-lg py-1.5 w-1/2' onClick={shareFromAPI}>
-                    <img src={getImageUrl('result-element', 'ig')} alt="instagram" className='w-8 h-8' />
-                    <span className='mx-2'>Instagram</span>
-                </button> */}
-
-                {/* facebook */}
-                {/* <button className='flex items-center justify-center border rounded-lg py-1.5 w-1/2' onClick={shareFromAPI}>
-                    <img src={getImageUrl('result-element', 'fb')} alt="facebook" className='w-8 h-8' />
-                    <span className='mx-2'>Facebook</span>
-                </button> */}
+                <img loading="eager" src={downloadImagePath} alt="result-img" className="mx-auto" ref={imageToShare} onLoad={() => setImageLoaded(true)} />
 
                 {imageLoaded && <>
-                    {/* {isDownload ?
-                        <div className='text-white'>
-                            <p className='py-3 text-center'>長按圖片進行下載</p>
-                            <p className='text-center'>分享到社群邀請朋友測驗，尋找你的冒險夥伴！</p>
-                            {isMobile ? <MobileBtn /> : <WebBtn />}
-                        </div> :
-                        <button className='rounded-full bg-white w-full py-4 mt-6' onClick={() => setIsDownload(true)}>取得結果圖</button>
-                    } */}
                     <div className='text-white'>
                         <p className='py-3 text-center'>長按圖片進行下載</p>
                         <p className='text-center'>分享到社群邀請朋友測驗，尋找你的冒險夥伴！</p>
                         {isMobile ? <MobileBtn imageToShare={imageToShare} /> : <WebBtn />}
+                        <Link to='/' replace={true} className='block border rounded-lg py-4 w-full text-center'>再測一次</Link>
                     </div>
                     <img loading="lazy" src={getImageUrl('result-element', 'divide')} alt="divide" className='my-16' />
                     <div className='text-center text-white'>
