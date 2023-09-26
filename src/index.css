@@ -2,6 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: 'GenSenRounded TW';
+  src: url('../src/assets/font/ttc/GenSenRounded-L.ttc') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'GenSenRounded TW';
+  src: url('../src/assets/font/ttc/GenSenRounded-M.ttc') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+
 html,
 body,
 div,
@@ -109,6 +123,7 @@ body {
   line-height: 1;
   box-sizing: border-box;
   overscroll-behavior: none;
+  font-family: "GenSenRounded TW", sans-serif;
 }
 
 ol,

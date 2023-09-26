@@ -25,6 +25,7 @@ export default function Quiz() {
 }
 
 let sum = 0
+const totalQuestions = data.length
 
 function Questions({ isLoading, setIsLoading }) {
     const [imageLoaded, setImageLoaded] = useState(false);
@@ -47,7 +48,7 @@ function Questions({ isLoading, setIsLoading }) {
     async function next(id, weight) {
         sum += weight
 
-        if (id <= 9) {
+        if (id <= totalQuestions - 1) {
             setIsVisible(!isVisible);
             setTimeout(() => {
                 setIsVisible(isVisible);
@@ -61,21 +62,26 @@ function Questions({ isLoading, setIsLoading }) {
 
     return <div className={`${isLoading ? 'hidden' : 'block'} transition-opacity ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
         <img src={getImageUrl('quiz', 'poster')} alt="poster" onLoad={() => setImageLoaded(true)} className={imageLoaded ? 'block' : 'hidden'} />
-        {imageLoaded && <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 h-full w-2/3">
+
+        {imageLoaded && <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 h-full w-3/5 md:w-[65%]">
             <div className="relative h-full mx-6 text-sm md:text-base">
                 {/* 題目 */}
                 <div className="absolute top-[17%] sm:top-[19%] md:top-[12%] w-full">
                     <img
                         src={getImageUrl('quiz', currentQuestion.label)}
                         alt="label" className="block h-8" />
-                    <p className="mt-0.5">{currentQuestion.question}</p>
+                    <p className="mt-2">{currentQuestion.question}</p>
                 </div>
 
                 {/* 選項 */}
-                <div className="absolute bottom-12 sm:bottom-16 md:bottom-0 md:top-1/2 md:-translate-y-1/4 w-full space-y-2 md:space-y-3">
+                <div className="absolute top-1/2 -translate-y-1/4 w-full space-y-2 md:space-y-3">
                     {currentQuestion.answers.map(answer =>
                         <button className="rounded-full py-2.5 w-full bg-white" key={answer.weight} onClick={() => next(currentQuestion.id, answer.weight)}>{answer.content}</button>
                     )}
+                </div>
+
+                <div className='absolute -bottom-12 inset-x-0 text-center'>
+                    <div className='bg-white/30 text-white px-3 py-0.5 inline-block rounded-full'>{questionIndex + 1} / {totalQuestions}</div>
                 </div>
             </div>
         </div>}
