@@ -2,7 +2,9 @@ import getImageUrl from "../helpers/getImageUrl";
 
 export default function Layout({ children }) {
     return (
-        <div className="fixed inset-x-0 top-0 h-screen">
+        <div className="fixed inset-x-0 top-0" style={{
+            height: '100dvh',
+        }}>
             <picture>
                 <source media="(min-width: 1200px)" srcSet={getImageUrl('background', '1200-bg')} />
                 <source media="(min-width: 768px)" srcSet={getImageUrl('background', '810-bg')} />
