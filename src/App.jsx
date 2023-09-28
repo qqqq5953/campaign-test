@@ -4,6 +4,7 @@ import Quiz from './pages/Quiz'
 import Result from './pages/Result'
 import { useEffect, useRef } from 'react'
 import { useLocation } from 'react-router-dom';
+import audio from '../src/assets/bg-music.mp3'
 
 function App() {
   const audioRef = useRef(null)
@@ -33,7 +34,7 @@ function App() {
         <Route path="/result" element={<Result />}></Route>
       </Routes>
       <audio controls loop ref={audioRef} className="fixed bottom-0 bg-gray-100 w-full rounded-none">
-        <source src="../src/assets/bg-music.mp3" type="audio/mp3" />
+        <source src={audio} type="audio/mp3" />
         Your browser does not support the audio tag.
       </audio>
     </>
