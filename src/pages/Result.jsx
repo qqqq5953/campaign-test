@@ -51,16 +51,16 @@ export default function Result() {
     }, []);
 
     return (
-        <div className='px-4 pt-8 pb-36' style={{
+        <div className='pb-36 sm:pt-8' style={{
             backgroundImage: `url(${backgroundImageSrc})`,
             backgroundSize: "cover",
             backgroundPosition: "top center",
             backgroundRepeat: "repeat",
         }}>
-            {isBgImgLoaded && <div className='mx-auto max-w-[400px]'>
-                <img loading="eager" src={downloadImagePath} alt="result-img" className="mx-auto" ref={imageToShare} onLoad={() => setImageLoaded(true)} />
+            {isBgImgLoaded && <div className='sm:max-w-[400px] mx-auto'>
+                <img loading="eager" src={downloadImagePath} alt="result-img" className='' ref={imageToShare} onLoad={() => setImageLoaded(true)} />
 
-                {imageLoaded && <>
+                {imageLoaded && <div className='mx-auto px-4'>
                     <div className='text-white'>
                         <p className='py-3 text-center'>長按圖片進行下載</p>
                         <p className='text-center'>分享到社群邀請朋友測驗，尋找你的冒險夥伴！</p>
@@ -87,7 +87,7 @@ export default function Result() {
                     </div>
                     <img loading="lazy" src={getImageUrl('result-element', 'clouds')} alt="clouds" className='my-16' />
                     <a href="https://www.gaia.net/tc/services/2/cloudcomputing" target='blank' className='block text-center rounded-full bg-white w-full py-4 mt-6'>了解更多上雲資訊</a>
-                </>
+                </div>
                 }
             </div>}
         </div >
