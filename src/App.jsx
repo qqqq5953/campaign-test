@@ -33,7 +33,7 @@ function App() {
         <Route path="/quiz" element={<Quiz />}></Route>
         <Route path="/result" element={<Result />}></Route>
       </Routes>
-      <audio controls loop ref={audioRef} className="fixed bottom-0 bg-gray-100 w-full rounded-none">
+      <audio controls loop ref={audioRef} className="fixed bottom-0 bg-gray-100 w-full rounded-none hidden">
         <source src={audio} type="audio/mp3" />
         Your browser does not support the audio tag.
       </audio>
