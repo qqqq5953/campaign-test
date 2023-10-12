@@ -1,11 +1,11 @@
 import { useNavigate, useNavigationType } from 'react-router-dom'
-import { useState, useEffect } from "react"
-import data from "../data.json"
+import { useState, useEffect, useContext } from "react"
+import { QuizContext } from '../context/QuizContext'
+
 import getImageUrl from "../helpers/getImageUrl";
 import Layout from './Layout';
 
 export default function Quiz() {
-    const [isLoading, setIsLoading] = useState(false)
     const navigationType = useNavigationType()
     const navigate = useNavigate();
 
@@ -17,48 +17,16 @@ export default function Quiz() {
     return (
         <Layout>
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[500px] md px-5">
-                <Loading isLoading={isLoading} />
-                <Questions isLoading={isLoading} setIsLoading={setIsLoading} />
+                <Loading />
+                <Questions />
             </div>
         </Layout>
     )
 }
 
-let sum = 0
-const totalQuestions = data.length
-
-function Questions({ isLoading, setIsLoading }) {
+function Questions() {
     const [imageLoaded, setImageLoaded] = useState(false);
-    const [questionIndex, setQuestionIndex] = useState(0)
-    const currentQuestion = data[questionIndex]
-    const navigate = useNavigate();
-
-    async function simulateCalculation() {
-        setIsLoading(true)
-        return new Promise(resolve => {
-            setTimeout(() => {
-                setIsLoading(false)
-                resolve()
-            }, 1000);
-        })
-    }
-
-    const [isVisible, setIsVisible] = useState(true);
-
-    async function next(id, weight) {
-        sum += weight
-
-        if (id <= totalQuestions - 1) {
-            setIsVisible(!isVisible);
-            setTimeout(() => {
-                setIsVisible(isVisible);
-                setQuestionIndex(q => q + 1)
-            }, 100);
-        } else {
-            await simulateCalculation()
-            navigate("/result", { state: { result: sum } })
-        }
-    }
+    const { questionIndex, isLoading, isVisible, next, currentQuestion, totalQuestions } = useContext(QuizContext);
 
     return <div className={`${isLoading ? 'hidden' : 'block'} transition-opacity ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
         <img src={getImageUrl('quiz', 'poster')} alt="poster" onLoad={() => setImageLoaded(true)} className={imageLoaded ? 'block' : 'hidden'} />
@@ -88,7 +56,9 @@ function Questions({ isLoading, setIsLoading }) {
     </div>
 }
 
-function Loading({ isLoading }) {
+function Loading() {
+    const { isLoading } = useContext(QuizContext);
+
     return <div className={`bg-white/40 rounded-xl mx-5 pt-16 pb-16 space-y-4 ${isLoading ? 'block' : 'hidden'} `}>
         <img src={getImageUrl('result-element', 'loader')} alt="loader" className='w-20 h-20 block mx-auto animate-bounce' />
         <img src={getImageUrl('result-element', 'wood')} alt="loader" className='w-20 block mx-auto' />

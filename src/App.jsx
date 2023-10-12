@@ -1,15 +1,17 @@
 import { Route, Routes } from 'react-router-dom'
 import Home from './pages/Home'
+import InitUser from './pages/InitUser'
 import Quiz from './pages/Quiz'
 import Result from './pages/Result'
 import { useEffect, useRef } from 'react'
 import { useLocation } from 'react-router-dom';
 import audio from '../src/assets/bg-music.mp3'
+import QuizProvider from './context/QuizContext'
 
 function App() {
   const audioRef = useRef(null)
   const location = useLocation()
-  console.log(location);
+  // console.log('App', location);
   async function playAudio() {
     try {
       await audioRef.current?.play();
@@ -27,9 +29,10 @@ function App() {
     }
   }, [location])
   return (
-    <>
+    <QuizProvider>
       <Routes>
         <Route index element={<Home />}></Route>
+        <Route path="/init" element={<InitUser />}></Route>
         <Route path="/quiz" element={<Quiz />}></Route>
         <Route path="/result" element={<Result />}></Route>
       </Routes>
@@ -37,7 +40,7 @@ function App() {
         <source src={audio} type="audio/mp3" />
         Your browser does not support the audio tag.
       </audio>
-    </>
+    </QuizProvider>
   )
 }
 
