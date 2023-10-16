@@ -65,7 +65,10 @@ export default function Result() {
                         <p className='py-3 text-center'>長按圖片進行下載</p>
                         <p className='text-center'>分享到社群邀請朋友測驗，尋找你的冒險夥伴！</p>
                         {isMobile ? <MobileBtn imageToShare={imageToShare} /> : <WebBtn />}
-                        <Link to='/' replace={true} className='block border rounded-lg py-4 w-full text-center'>再測一次</Link>
+                        <Link to='/' replace={true} className='flex items-center justify-center border rounded-lg py-4 w-full'>
+                            <img loading="lazy" src={getImageUrl('result-element', 'resume-icon')} alt="resume-icon" />
+                            <span className='mx-2'>再測一次</span>
+                        </Link>
                     </div>
                     <img loading="lazy" src={getImageUrl('result-element', 'divide')} alt="divide" className='my-16' />
                     <div className='text-center text-white'>
@@ -118,8 +121,8 @@ function MobileBtn({ imageToShare, role }) {
 
     return <div className='flex space-x-2 py-4'>
         <button className='flex items-center justify-center border rounded-lg py-4 w-full' onClick={shareFromAPI}>
-            <i className="fa-solid fa-xl fa-share-nodes "></i>
-            <span className='mx-3'>分享至社群</span>
+            <img loading="lazy" src={getImageUrl('result-element', 'share-icon')} alt="share-icon" />
+            <span className='mx-2'>分享至社群</span>
         </button>
     </div>
 }

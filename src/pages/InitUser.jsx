@@ -62,11 +62,9 @@ export default function InitUser() {
                         focus:border-white/50'
                     />
                 </div>
-                <button className="w-60 px-4 py-2 bg-white/60 rounded-full text-zinc-700 text-center font-bold leading-tight focus:outline-none focus:bg-indigo-900 focus:text-white transition ease-in-out duration-300 hover:bg-indigo-900 hover:text-white disabled:text-black/40 disabled:bg-slate-400/80" disabled={!userName} onClick={next}>
+                {userName && <button className="w-60 px-4 py-2 bg-white/60 rounded-full text-zinc-700 text-center font-bold leading-tight focus:outline-none focus:bg-purple-800 focus:text-white transition ease-in-out duration-300 hover:bg-purple-800 hover:text-white" onClick={next}>
                     準備好了！
-                </button>
-
-
+                </button>}
             </div>
 
             {/* <div>

@@ -4,10 +4,17 @@ import { useContext } from "react"
 import { QuizContext } from '../context/QuizContext'
 
 export default function Layout({ children }) {
-    const { prev } = useContext(QuizContext);
-
+    const { prev, isPlaying, setIsPlaying, audioRef, playAudio, pauseAudio } = useContext(QuizContext);
     const location = useLocation()
     const isShowWatermark = ['/init', '/quiz'].includes(location.pathname)
+
+    function toggle() {
+        if (isPlaying) {
+            pauseAudio(audioRef).then(() => setIsPlaying(false))
+        } else {
+            playAudio(audioRef).then(() => setIsPlaying(true))
+        }
+    }
 
     return (
         <div className="fixed inset-x-0 top-0" style={{
@@ -27,7 +34,7 @@ export default function Layout({ children }) {
 
             {isShowWatermark && <div className="absolute bottom-0 left-0 w-full flex justify-between p-4">
                 <div className="rounded bg-white/80 px-2 py-1" onClick={prev}>上一頁</div>
-                <div className="rounded bg-white/80 px-2 py-1">音樂</div>
+                <div onClick={toggle} className={`rounded bg-white/80 px-2 py-1 ${isPlaying ? 'text-purple-800' : 'text-purple-800/50'}`}>音樂</div>
             </div>}
         </div>
     )
