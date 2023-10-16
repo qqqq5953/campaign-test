@@ -1,5 +1,5 @@
 import { useNavigate, useNavigationType } from 'react-router-dom'
-import { useState, useEffect, useContext } from "react"
+import { useEffect, useContext } from "react"
 import { QuizContext } from '../context/QuizContext'
 
 import getImageUrl from "../helpers/getImageUrl";
@@ -25,34 +25,27 @@ export default function Quiz() {
 }
 
 function Questions() {
-    const [imageLoaded, setImageLoaded] = useState(false);
     const { questionIndex, isLoading, isVisible, next, currentQuestion, totalQuestions } = useContext(QuizContext);
 
     return <div className={`${isLoading ? 'hidden' : 'block'} transition-opacity ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
-        <img src={getImageUrl('quiz', 'poster')} alt="poster" onLoad={() => setImageLoaded(true)} className={imageLoaded ? 'block' : 'hidden'} />
-
-        {imageLoaded && <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 h-full w-3/5 md:w-[65%]">
-            <div className="relative h-full mx-6 text-sm md:text-base">
-                {/* 題目 */}
-                <div className="absolute top-[17%] sm:top-[19%] md:top-[12%] w-full">
-                    <img
-                        src={getImageUrl('quiz', currentQuestion.label)}
-                        alt="label" className="block h-8" />
-                    <p className="mt-2">{currentQuestion.question}</p>
-                </div>
-
-                {/* 選項 */}
-                <div className="absolute top-1/2 -translate-y-1/4 w-full space-y-2 md:space-y-3">
-                    {currentQuestion.answers.map(answer =>
-                        <button className="rounded-full py-2.5 w-full bg-white" key={answer.weight} onClick={() => next(currentQuestion.id, answer.weight)}>{answer.content}</button>
-                    )}
-                </div>
-
-                <div className='absolute -bottom-12 inset-x-0 text-center'>
-                    <div className='bg-white/30 text-white px-3 py-0.5 inline-block rounded-full'>{questionIndex + 1} / {totalQuestions}</div>
-                </div>
+        <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 w-4/5 md:w-[65%]mx-6 px-2 flex flex-col gap-8 items-center">
+            {/* 題目 */}
+            <div className='flex gap-2 text-white text-xl font-bold'>
+                <div>{currentQuestion.label}</div>
+                <p className="">{currentQuestion.question}</p>
             </div>
-        </div>}
+
+            {/* 選項 */}
+            <div className="space-y-2 md:text-base md:space-y-3 font-bold">
+                {currentQuestion.answers.map(answer =>
+                    <button className="rounded-full py-4 w-full bg-white/80" key={answer.weight} onClick={() => next(currentQuestion.id, answer.weight)}>{answer.content}</button>
+                )}
+            </div>
+
+            <div className='text-center'>
+                <div className='bg-white/30 text-white px-3 py-0.5 inline-block rounded-full'>{questionIndex + 1} / {totalQuestions}</div>
+            </div>
+        </div>
     </div>
 }
 

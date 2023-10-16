@@ -85,7 +85,7 @@ export default function QuizProvider({ children }) {
     useEffect(() => {
         // avoid console error: "Failed to play, error: NotAllowedError: play() failed because the user didn't interact with the document first."
         if (location.pathname !== "/") {
-            playAudio(audioRef).then(() => setIsPlaying(true))
+            // playAudio(audioRef).then(() => setIsPlaying(true))
         } else {
             pauseAudio(audioRef).then(() => setIsPlaying(false))
             sum = 0
