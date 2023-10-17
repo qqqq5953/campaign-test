@@ -31,7 +31,7 @@ function Questions() {
         <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 w-4/5 md:w-[65%]mx-6 px-2 flex flex-col gap-8 items-center">
             {/* 題目 */}
             <div className='flex gap-2 text-white text-xl font-bold'>
-                <div>{currentQuestion.label}</div>
+                <div>Q{currentQuestion.id}</div>
                 <p className="">{currentQuestion.question}</p>
             </div>
 
@@ -42,9 +42,15 @@ function Questions() {
                 )}
             </div>
 
-            <div className='text-center'>
+            {/* <div className='text-center'>
                 <div className='bg-white/30 text-white px-3 py-0.5 inline-block rounded-full'>{questionIndex + 1} / {totalQuestions}</div>
-            </div>
+            </div> */}
+
+            {/* <img src={getImageUrl('quiz', 'loader')} alt="loader" className='w-20 h-20 block mx-auto animate-bounce' /> */}
+            <img
+                src={getImageUrl('quiz', currentQuestion.progress)}
+                alt="label" className="w-full" />
+
         </div>
     </div>
 }
