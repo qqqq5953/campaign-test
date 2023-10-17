@@ -38,7 +38,7 @@ function Questions() {
             {/* 選項 */}
             <div className="space-y-2 md:text-base md:space-y-3 font-bold">
                 {currentQuestion.answers.map(answer =>
-                    <button className="rounded-full py-4 w-full bg-white/80" key={answer.weight} onClick={() => next(currentQuestion.id, answer.weight)}>{answer.content}</button>
+                    <button className="rounded-full py-4 w-full bg-white/60 active:bg-stone-700/20" key={answer.weight} onClick={() => next(currentQuestion.id, answer.weight)}>{answer.content}</button>
                 )}
             </div>
 

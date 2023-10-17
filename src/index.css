@@ -124,6 +124,7 @@ body {
   box-sizing: border-box;
   overscroll-behavior: none;
   font-family: "Taipei Sans TC Beta", sans-serif;
+  -webkit-tap-highlight-color: transparent
 }
 
 ol,

@@ -40,8 +40,8 @@ export default function InitUser() {
 
     return (
         <Layout>
-            <div className='flex flex-col items-center text-white leading-5 font-bold'>
-                <div className='text-center'>
+            <div className='relative flex flex-col items-center text-white leading-5 font-bold'>
+                <div className='text-center space-y-0.5'>
                     <div>解專案就像破RPG，需要好隊友一起闖關，</div>
                     <div>對於自己在團隊的定位感到疑惑？</div>
                     <div>如何找到合適的夥伴來幫助團隊呢？</div>
@@ -62,7 +62,7 @@ export default function InitUser() {
                         focus:border-white/50'
                     />
                 </div>
-                {userName && <button className="w-60 px-4 py-2 bg-white/60 rounded-full text-zinc-700 text-center font-bold leading-tight focus:outline-none focus:bg-purple-800 focus:text-white transition ease-in-out duration-300 hover:bg-purple-800 hover:text-white" onClick={next}>
+                {userName && <button className="absolute top-full w-60 px-4 py-2 bg-white/60 rounded-full text-zinc-700 text-center font-bold leading-tight focus:outline-none focus:bg-purple-800 focus:text-white transition ease-in-out duration-300 hover:bg-purple-800 hover:text-white" onClick={next}>
                     準備好了！
                 </button>}
             </div>
