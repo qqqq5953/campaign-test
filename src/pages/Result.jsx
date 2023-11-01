@@ -8,40 +8,10 @@ export default function Result() {
     const imageToShare = useRef(null)
 
     const [imageLoaded, setImageLoaded] = useState(false);
-    const [isBgImgLoaded, setIsBgImgLoaded] = useState(false)
     const [backgroundImageSrc, setBackgroundImageSrc] = useState('');
+    const [imageDataUrl, setImageDataUrl] = useState('');
 
-    useEffect(() => {
-        if (location.state != null) {
-            const sm = window.matchMedia("(max-width: 767px)")
-            const bgImageName = sm.matches ? '375-bg' : '1200-bg'
-            const imageUrl = getImageUrl('result-element', bgImageName);
-
-            // Load the background image when the component mounts
-            const backgroundImage = new Image();
-            backgroundImage.onload = function () {
-                setIsBgImgLoaded(true);
-            };
-            backgroundImage.src = imageUrl;
-            setBackgroundImageSrc(imageUrl);
-        } else {
-            navigate("/", { replace: true })
-        }
-    }, []);
-
-    if (location.state == null) return null
-
-    const score = useMemo(() => {
-        return location.state.result
-    }, [location.state.result])
-
-    const imageName = useMemo(() => {
-        return getRoleImage(score)
-    }, [])
-
-    const downloadImagePath = useMemo(() => {
-        return getImageUrl('result-element', imageName)
-    }, [])
+    const userName = localStorage.getItem('userName')
 
     const isMobile = useMemo(() => {
         const userAgent = navigator.userAgent || navigator.platform;
@@ -50,28 +20,71 @@ export default function Result() {
         return false;
     }, []);
 
+    useEffect(() => {
+        if (location.state != null) {
+            const sm = window.matchMedia("(max-width: 767px)")
+            const bgImageName = sm.matches ? '375-bg' : '1200-bg'
+            const imageUrl = getImageUrl('result-element', bgImageName, "webp");
+            setBackgroundImageSrc(imageUrl);
+        } else {
+            navigate("/", { replace: true })
+        }
+    }, []);
+
+    if (location.state == null) return navigate("/", { replace: true })
+
+    useEffect(() => {
+        const score = location.state.result
+        const imageName = getRoleImage(score)
+        generateImage(imageName)
+
+        function generateImage(imageName) {
+            const imageUrl = getImageUrl('result-element', imageName, "webp")
+            const canvas = document.createElement('canvas');
+            const context = canvas.getContext('2d');
+            const img = new Image();
+
+            img.onload = () => {
+                canvas.width = img.width;
+                canvas.height = img.height;
+                context.drawImage(img, 0, 0); // 將圖片繪製到畫布上
+                context.font = 'bold 32px Taipei Sans TC Beta';
+                context.fillStyle = 'white';
+                const xAxisDistance = imageName !== "stone_download" ? 50 : 310
+                const yAxisDistance = imageName !== "stone_download" ? 120 : 160
+                context.fillText(userName.replace(/\"/g, ""), xAxisDistance, yAxisDistance); // 插入使用者姓名
+                const dataURL = canvas.toDataURL(imageUrl); // 取得圖片的DataURL
+                setImageDataUrl(dataURL); // 將DataURL存儲在狀態中
+            };
+
+            img.src = imageUrl;
+        };
+    }, [])
+
     return (
-        <div className='pb-36 sm:pt-8' style={{
+        <div className='pb-36 sm:pt-8 min-h-screen text-white' style={{
             backgroundImage: `url(${backgroundImageSrc})`,
             backgroundSize: "cover",
             backgroundPosition: "top center",
             backgroundRepeat: "repeat",
         }}>
-            {isBgImgLoaded && <div className='sm:max-w-[400px] mx-auto'>
-                <img loading="eager" src={downloadImagePath} alt="result-img" className='' ref={imageToShare} onLoad={() => setImageLoaded(true)} />
+            <div className='sm:max-w-[400px] mx-auto'>
+                <div className={`h-[720px] flex justify-center items-center ${imageLoaded ? 'hidden' : 'block'}`}>圖片載入中...</div>
+                <img loading="eager" src={imageDataUrl} alt="result-img" className={imageLoaded ? 'block' : 'hidden'} ref={imageToShare} onLoad={() => setImageLoaded(true)} />
 
                 {imageLoaded && <div className='mx-auto px-4'>
-                    <div className='text-white'>
+                    <div>
                         <p className='py-3 text-center'>長按圖片進行下載</p>
                         <p className='text-center'>分享到社群邀請朋友測驗，尋找你的冒險夥伴！</p>
                         {isMobile ? <MobileBtn imageToShare={imageToShare} /> : <WebBtn />}
                         <Link to='/' replace={true} className='flex items-center justify-center border rounded-lg py-4 w-full'>
-                            <img loading="lazy" src={getImageUrl('result-element', 'resume-icon')} alt="resume-icon" />
+                            <img loading="lazy" src={getImageUrl('result-element', 'resume-icon', "webp")} alt="resume-icon" />
                             <span className='mx-2'>再測一次</span>
                         </Link>
                     </div>
-                    <img loading="lazy" src={getImageUrl('result-element', 'divide')} alt="divide" className='my-16' />
-                    <div className='text-center text-white'>
+
+                    <img loading="lazy" src={getImageUrl('result-element', 'divide', "webp")} alt="divide" className='my-16' />
+                    <div className='text-center'>
                         <p className='py-1.5'>蓋亞資訊</p>
                         <p>雲端服務整合專家</p>
                         <p className='py-4 text-xl'>GAIA INFORMATION TECHNOLOGY</p>
@@ -82,17 +95,17 @@ export default function Result() {
                             <p>快速解決客戶問題及需求。</p>
                         </div>
                     </div>
-                    <a href="https://www.gaia.net/tc" target='blank' className='block text-center rounded-full bg-white w-full py-4 mt-6'>立即登入GAIA 新世界</a>
-                    <img loading="lazy" src={getImageUrl('result-element', 'divide')} alt="divide" className='my-16' />
-                    <div className='text-center text-white text-xl'>
+                    <a href="https://www.gaia.net/tc" target='blank' className='block text-center rounded-full bg-white/60 w-full py-4 mt-6 text-black'>立即登入GAIA 新世界</a>
+                    <img loading="lazy" src={getImageUrl('result-element', 'divide', "webp")} alt="divide" className='my-16' />
+                    <div className='text-center text-xl'>
                         <p className=''>攜手 GAIA</p>
                         <p>打造未來雲端趨勢</p>
                     </div>
-                    <img loading="lazy" src={getImageUrl('result-element', 'clouds')} alt="clouds" className='my-16' />
-                    <a href="https://www.gaia.net/tc/services/2/cloudcomputing" target='blank' className='block text-center rounded-full bg-white w-full py-4 mt-6'>了解更多上雲資訊</a>
+                    <img loading="lazy" src={getImageUrl('result-element', 'clouds', "webp")} alt="clouds" className='my-16' />
+                    <a href="https://www.gaia.net/tc/services/2/cloudcomputing" target='blank' className='block text-center rounded-full bg-white/60 w-full py-4 mt-6 text-black'>了解更多上雲資訊</a>
                 </div>
                 }
-            </div>}
+            </div>
         </div >
     )
 }
@@ -101,7 +114,7 @@ function MobileBtn({ imageToShare, role }) {
     async function shareFromAPI() {
         const imageUrl = imageToShare.current.src;
         const imageBlob = await fetch(imageUrl).then((response) => response.blob());
-        const imageFile = new File([imageBlob], `${role}.png`, { type: "image/png" });
+        const imageFile = new File([imageBlob], `${role}.webp`, { type: "image/webp" });
 
         // Check if the browser supports the Web Share API
         if (!navigator.canShare) return alert("您的瀏覽器不支援分享功能")
@@ -121,7 +134,7 @@ function MobileBtn({ imageToShare, role }) {
 
     return <div className='flex space-x-2 py-4'>
         <button className='flex items-center justify-center border rounded-lg py-4 w-full' onClick={shareFromAPI}>
-            <img loading="lazy" src={getImageUrl('result-element', 'share-icon')} alt="share-icon" />
+            <img loading="lazy" src={getImageUrl('result-element', 'share-icon', "webp")} alt="share-icon" />
             <span className='mx-2'>分享至社群</span>
         </button>
     </div>
@@ -130,15 +143,17 @@ function MobileBtn({ imageToShare, role }) {
 function WebBtn() {
     const fbShareLink = useMemo(() => encodeURI(window.location.origin + '/campaign-test'), [])
 
+    console.log('fbShareLink', fbShareLink);
+
     return <div className='flex space-x-2 py-4'>
         <a href='https://www.instagram.com/create/story' className='flex items-center justify-center border rounded-lg py-1.5 w-1/2' target='blank'>
-            <img loading="eager" src={getImageUrl('result-element', 'ig')} alt="instagram" className='w-8 h-8' />
+            <img loading="eager" src={getImageUrl('result-element', 'ig', "webp")} alt="instagram" className='w-8 h-8' />
             <span className='mx-2'>Instagram</span>
         </a>
 
         <div className="fb-share-button border rounded-lg w-1/2 py-1.5" data-href={fbShareLink} data-layout="" data-size="">
             <a target="_blank" href={`https://www.facebook.com/sharer/sharer.php?u=${fbShareLink}`} className="fb-xfbml-parse-ignore flex items-center justify-center">
-                <img loading="eager" src={getImageUrl('result-element', 'fb')} alt="facebook" className='w-8 h-8' />
+                <img loading="eager" src={getImageUrl('result-element', 'fb', "webp")} alt="facebook" className='w-8 h-8' />
                 <span className='mx-2'>Facebook</span>
             </a>
         </div>
@@ -149,14 +164,16 @@ function getRoleImage(score) {
     let imageName = "knight"
 
     if (score >= 0 && score <= 5) {
-        imageName = "knight"
+        imageName = "stone"
     } else if (score >= 6 && score <= 10) {
-        imageName = "wizard"
+        imageName = "knight"
     } else if (score >= 11 && score <= 15) {
-        imageName = "archer"
+        imageName = "wizard"
     } else if (score >= 16 && score <= 20) {
+        imageName = "archer"
+    } else if (score >= 21 && score <= 25) {
         imageName = "assassin"
-    } else if (score >= 21 && score <= 30) {
+    } else if (score >= 26 && score <= 30) {
         imageName = "trainer"
     }
 

@@ -1,42 +1,27 @@
 import Layout from './Layout';
-import { useNavigate } from 'react-router-dom'
+import { useContext, useEffect } from "react"
+import { QuizContext } from '../context/QuizContext'
+import { useNavigate, useLocation } from 'react-router-dom'
 import useLocalStorage from '../hooks/useLocalStorage'
 
 
 export default function InitUser() {
     const [userName, setUserName] = useLocalStorage('userName', '')
+    const { setIsPlaying, audioRef, playAudio } = useContext(QuizContext);
 
     const navigate = useNavigate();
+    const location = useLocation();
+
+    useEffect(() => {
+        if (location.state?.prevPath !== '/') return
+        playAudio(audioRef).then(() => setIsPlaying(true))
+    }, [])
 
     function next() {
         if (!userName) return
         setUserName(userName);
-
         navigate('/quiz')
     }
-
-    // const handleDownload = (imageName) => {
-    //     const canvas = document.createElement('canvas');
-    //     const context = canvas.getContext('2d');
-    //     const img = new Image();
-
-    //     img.onload = () => {
-    //         canvas.width = img.width;
-    //         canvas.height = img.height;
-    //         context.drawImage(img, 0, 0); // 將圖片繪製到畫布上
-    //         context.font = '60px Arial';
-    //         context.fillStyle = 'white';
-    //         context.fillText(`姓名: ${userName}`, 100, 100); // 插入使用者姓名
-    //         const dataURL = canvas.toDataURL('image/png'); // 取得圖片的DataURL
-
-    //         const a = document.createElement('a');
-    //         a.href = dataURL; // 使用圖片的DataURL
-    //         a.download = 'result.png'; // 下載的文件名
-    //         a.click(); // 模擬點擊連結
-    //     };
-
-    //     img.src = imageName;
-    // };
 
     return (
         <Layout>
@@ -62,7 +47,15 @@ export default function InitUser() {
                         focus:border-white/50'
                     />
                 </div>
-                {userName && <button className="absolute top-full w-60 px-4 py-2 bg-white/60 rounded-full text-zinc-700 text-center font-bold leading-tight focus:outline-none focus:bg-purple-800 focus:text-white transition ease-in-out duration-300 hover:bg-purple-800 hover:text-white" onClick={next}>
+                {userName && <button className="absolute top-full w-60 px-4 py-2  rounded-full text-zinc-700 text-center font-bold leading-tight 
+                bg-white/60
+                border-2 border-transparent
+                focus:outline-none 
+                focus:bg-purple-800 
+                focus:text-white 
+                hover:bg-purple-800 hover:text-white    hover:border-white/60
+                transition-all ease-in-out duration-300 
+                " onClick={next}>
                     準備好了！
                 </button>}
             </div>

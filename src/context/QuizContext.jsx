@@ -83,25 +83,20 @@ export default function QuizProvider({ children }) {
     }
 
     useEffect(() => {
-        // avoid console error: "Failed to play, error: NotAllowedError: play() failed because the user didn't interact with the document first."
-        if (location.pathname !== "/") {
-            // playAudio(audioRef).then(() => setIsPlaying(true))
-        } else {
-            pauseAudio(audioRef).then(() => setIsPlaying(false))
-            sum = 0
-            weightMap = {}
-            setQuestionIndex(0)
-        }
+        if (location.pathname !== "/") return
+
+        pauseAudio(audioRef).then(() => setIsPlaying(false))
+        sum = 0
+        weightMap = {}
+        setQuestionIndex(0)
     }, [location])
 
     return (
         <QuizContext.Provider
             value={{
-                questionIndex,
                 isVisible,
                 isLoading,
                 currentQuestion,
-                totalQuestions,
                 audioRef,
                 isPlaying,
                 setIsPlaying,

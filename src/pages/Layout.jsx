@@ -20,7 +20,7 @@ export default function Layout({ children }) {
         <div className="fixed inset-x-0 top-0" style={{
             height: '100dvh',
         }}>
-            <img src={getImageUrl('background', '1200-bg')} alt="Image description" className="w-full h-full object-cover" />
+            <img src={getImageUrl('background', '1200-bg', 'webp')} alt="Image description" className="w-full h-full object-cover" />
 
             {<div className="absolute inset-y-0 left-1/2 -translate-x-1/2 w-full max-w-[400px] flex flex-col items-center justify-between">
                 {showWaterMarkAndButtons &&

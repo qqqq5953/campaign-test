@@ -25,7 +25,7 @@ export default function Quiz() {
 }
 
 function Questions() {
-    const { questionIndex, isLoading, isVisible, next, currentQuestion, totalQuestions } = useContext(QuizContext);
+    const { isLoading, isVisible, next, currentQuestion } = useContext(QuizContext);
 
     return <div className={`${isLoading ? 'hidden' : 'block'} transition-opacity ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
         <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 w-4/5 md:w-[65%]mx-6 px-2 flex flex-col gap-8 items-center">
@@ -38,19 +38,20 @@ function Questions() {
             {/* 選項 */}
             <div className="space-y-2 md:text-base md:space-y-3 font-bold">
                 {currentQuestion.answers.map(answer =>
-                    <button className="rounded-full py-4 w-full bg-white/60 active:bg-stone-700/20" key={answer.weight} onClick={() => next(currentQuestion.id, answer.weight)}>{answer.content}</button>
+                    <button className="rounded-full py-4 w-full
+                    bg-white/60
+                    border-2 border-transparent
+                    focus:outline-none 
+                    active:bg-purple-800 
+                    active:text-white 
+                    active:border-white/60
+                    " key={answer.weight} onClick={() => next(currentQuestion.id, answer.weight)}>{answer.content}</button>
                 )}
             </div>
 
-            {/* <div className='text-center'>
-                <div className='bg-white/30 text-white px-3 py-0.5 inline-block rounded-full'>{questionIndex + 1} / {totalQuestions}</div>
-            </div> */}
-
-            {/* <img src={getImageUrl('quiz', 'loader')} alt="loader" className='w-20 h-20 block mx-auto animate-bounce' /> */}
             <img
                 src={getImageUrl('quiz', currentQuestion.progress)}
                 alt="label" className="w-full" />
-
         </div>
     </div>
 }
@@ -58,9 +59,9 @@ function Questions() {
 function Loading() {
     const { isLoading } = useContext(QuizContext);
 
-    return <div className={`bg-white/40 rounded-xl mx-5 pt-16 pb-16 space-y-4 ${isLoading ? 'block' : 'hidden'} `}>
-        <img src={getImageUrl('result-element', 'loader')} alt="loader" className='w-20 h-20 block mx-auto animate-bounce' />
-        <img src={getImageUrl('result-element', 'wood')} alt="loader" className='w-20 block mx-auto' />
+    return <div className={`rounded-xl mx-5 pt-16 pb-16 space-y-4 ${isLoading ? 'block' : 'hidden'} `}>
+        <img src={getImageUrl('result-element', 'loader', 'webp')} alt="loader" className='w-20 h-20 block mx-auto animate-bounce' />
+        <img src={getImageUrl('result-element', 'wood', 'webp')} alt="loader" className='w-20 block mx-auto' />
         <p className='text-center text-white pt-3'>正在收集結果...</p>
     </div>
 }
