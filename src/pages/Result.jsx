@@ -9,6 +9,8 @@ export default function Result() {
     const imageToShare = useRef(null)
 
     const [imageLoaded, setImageLoaded] = useState(false);
+    const [turnOnLoader, setTurnOnLoader] = useState(false);
+    const [isBgImgLoaded, setIsBgImgLoaded] = useState(false)
     const [backgroundImageSrc, setBackgroundImageSrc] = useState('');
     const [imageDataUrl, setImageDataUrl] = useState('');
 
@@ -24,7 +26,7 @@ export default function Result() {
     useEffect(() => {
         if (location.state != null) {
             const sm = window.matchMedia("(max-width: 767px)")
-            const bgImageName = sm.matches ? '375-bg' : '1200-bg'
+            const bgImageName = sm.matches ? '375-bg' : '1200-bg1'
             const imageUrl = getImageUrl('result-element', bgImageName, "webp");
             setBackgroundImageSrc(imageUrl);
         } else {
@@ -32,7 +34,22 @@ export default function Result() {
         }
     }, []);
 
+    useEffect(() => {
+        console.log('isBgImgLoaded', isBgImgLoaded);
+        simulateCalculation()
+    }, [isBgImgLoaded])
+
     if (location.state == null) return navigate("/", { replace: true })
+
+    async function simulateCalculation() {
+        setTurnOnLoader(true)
+        return new Promise(resolve => {
+            setTimeout(() => {
+                setTurnOnLoader(false)
+                resolve()
+            }, 1000);
+        })
+    }
 
     useEffect(() => {
         const score = location.state.result
@@ -63,17 +80,17 @@ export default function Result() {
     }, [])
 
     return (
-        <div className='pb-36 sm:pt-8 min-h-screen text-white' style={{
-            backgroundImage: `url(${backgroundImageSrc})`,
-            backgroundSize: "cover",
-            backgroundPosition: "top center",
-            backgroundRepeat: "repeat",
-        }}>
-            <div className='sm:max-w-[400px] mx-auto'>
-                <Loading imageLoaded={imageLoaded} />
+        <div className='relative min-h-screen h-[2150px] lg:h-[2300px] text-white'>
+            <img src={backgroundImageSrc} loading="eager" alt="Background-image" className="absolute w-full h-full object-cover" onLoad={() => setIsBgImgLoaded(true)} />
+
+            <div className={`absolute top-0 left-1/2 -translate-x-1/2 sm:max-w-[400px] mx-auto max-w-[375px] w-full lg:pt-20 ${isBgImgLoaded ? 'block' : 'hidden'}`} >
+                {/* loader */}
+                {(turnOnLoader || !imageLoaded) && <Loading imageLoaded={imageLoaded} />}
+
+                {/* 結果圖 */}
                 <img loading="eager" src={imageDataUrl} alt="result-img" className={imageLoaded ? 'block' : 'hidden'} ref={imageToShare} onLoad={() => setImageLoaded(true)} />
 
-                {imageLoaded && <div className='mx-auto px-4'>
+                <div className={`mx-auto px-4 ${imageLoaded ? 'block' : 'hidden'}`}>
                     <div>
                         <p className='py-3 text-center'>長按圖片進行下載</p>
                         <p className='text-center'>分享到社群邀請朋友測驗，尋找你的冒險夥伴！</p>
@@ -96,27 +113,35 @@ export default function Result() {
                             <p>快速解決客戶問題及需求。</p>
                         </div>
                     </div>
-                    <a href="https://www.gaia.net/tc" target='blank' className='block text-center rounded-full bg-white/60 w-full py-4 mt-6 text-black'>立即登入GAIA 新世界</a>
+                    <a href="https://www.gaia.net/tc" target='blank' className='block text-center rounded-full bg-white/60
+                    border-2 border-transparent
+                    focus:outline-none  bg-white/60 w-full py-4 mt-6 text-black active:bg-purple-800 
+                    active:text-white 
+                    active:border-white/60'>立即登入GAIA 新世界</a>
                     <img loading="lazy" src={getImageUrl('result-element', 'divide', "webp")} alt="divide" className='my-16' />
                     <div className='text-center text-xl'>
                         <p className=''>攜手 GAIA</p>
                         <p>打造未來雲端趨勢</p>
                     </div>
                     <img loading="lazy" src={getImageUrl('result-element', 'clouds', "webp")} alt="clouds" className='my-16' />
-                    <a href="https://www.gaia.net/tc/services/2/cloudcomputing" target='blank' className='block text-center rounded-full bg-white/60 w-full py-4 mt-6 text-black'>了解更多上雲資訊</a>
+                    <a href="https://www.gaia.net/tc/services/2/cloudcomputing" target='blank' className='block text-center rounded-full bg-white/60
+                    border-2 border-transparent
+                    focus:outline-none  bg-white/60 w-full py-4 mt-6 text-black active:bg-purple-800 
+                    active:text-white 
+                    active:border-white/60'>了解更多上雲資訊</a>
                 </div>
-                }
             </div>
         </div >
     )
 }
 
 function Loading({ imageLoaded }) {
-    console.log('imageLoaded', imageLoaded);
-    return <div className={`rounded-xl mx-5 pt-16 pb-16 space-y-4 ${imageLoaded ? 'hidden' : 'block'} `}>
-        <img src={getImageUrl('result-element', 'loader', 'webp')} alt="loader" className='w-20 h-20 block mx-auto animate-bounce' />
-        <img src={getImageUrl('result-element', 'wood', 'webp')} alt="loader" className='w-20 block mx-auto' />
-        <p className='text-center text-white pt-3'>正在收集結果...</p>
+    return <div className={`rounded-xl mx-5 pt-16 pb-16 space-y-4 h-screen grid place-items-center ${imageLoaded ? 'block' : 'block'} `}>
+        <div>
+            <img src={getImageUrl('result-element', 'loader', 'webp')} alt="loader" className='w-20 h-20 block mx-auto animate-bounce' />
+            <img src={getImageUrl('result-element', 'wood', 'webp')} alt="loader" className='w-20 block mx-auto' />
+            <p className='text-center text-white pt-3'>正在收集結果...</p>
+        </div>
     </div>
 }
 
@@ -154,17 +179,15 @@ function MobileBtn({ imageToShare, role }) {
 function WebBtn() {
     const fbShareLink = useMemo(() => encodeURI(window.location.origin + '/campaign-test'), [])
 
-    console.log('fbShareLink', fbShareLink);
-
     return <div className='flex space-x-2 py-4'>
         <a href='https://www.instagram.com/create/story' className='flex items-center justify-center border rounded-lg py-1.5 w-1/2' target='blank'>
-            <img loading="eager" src={getImageUrl('result-element', 'ig', "webp")} alt="instagram" className='w-8 h-8' />
+            <img loading="lazy" src={getImageUrl('result-element', 'ig', "webp")} alt="instagram" className='w-8 h-8' />
             <span className='mx-2'>Instagram</span>
         </a>
 
         <div className="fb-share-button border rounded-lg w-1/2 py-1.5" data-href={fbShareLink} data-layout="" data-size="">
             <a target="_blank" href={`https://www.facebook.com/sharer/sharer.php?u=${fbShareLink}`} className="fb-xfbml-parse-ignore flex items-center justify-center">
-                <img loading="eager" src={getImageUrl('result-element', 'fb', "webp")} alt="facebook" className='w-8 h-8' />
+                <img loading="lazy" src={getImageUrl('result-element', 'fb', "webp")} alt="facebook" className='w-8 h-8' />
                 <span className='mx-2'>Facebook</span>
             </a>
         </div>
