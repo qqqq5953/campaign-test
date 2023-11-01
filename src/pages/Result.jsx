@@ -80,17 +80,18 @@ export default function Result() {
     }, [])
 
     return (
-        <div className='relative min-h-screen h-[2150px] lg:h-[2300px] text-white'>
+        <div className={`relative text-white min-h-screen ${turnOnLoader ? 'h-auto' : 'h-[2150px] lg:h-[2300px]'} `}>
             <img src={backgroundImageSrc} loading="eager" alt="Background-image" className="absolute w-full h-full object-cover" onLoad={() => setIsBgImgLoaded(true)} />
 
-            <div className={`absolute top-0 left-1/2 -translate-x-1/2 sm:max-w-[400px] mx-auto max-w-[375px] w-full lg:pt-20 ${isBgImgLoaded ? 'block' : 'hidden'}`} >
+            <div className={`absolute top-0 left-1/2 -translate-x-1/2 sm:max-w-[400px] mx-auto max-w-[375px] w-full h-full lg:pt-20 ${isBgImgLoaded ? 'block' : 'hidden'}`} >
                 {/* loader */}
-                {(turnOnLoader || !imageLoaded) && <Loading imageLoaded={imageLoaded} />}
+                {(turnOnLoader || !imageLoaded) && <Loading imageLoaded={imageLoaded} />
+                }
 
                 {/* 結果圖 */}
-                <img loading="eager" src={imageDataUrl} alt="result-img" className={imageLoaded ? 'block' : 'hidden'} ref={imageToShare} onLoad={() => setImageLoaded(true)} />
+                <img loading="eager" src={imageDataUrl} alt="result-img" className={turnOnLoader || !imageLoaded ? 'hidden' : 'block'} ref={imageToShare} onLoad={() => setImageLoaded(true)} />
 
-                <div className={`mx-auto px-4 ${(turnOnLoader || !imageLoaded) ? 'hidden' : 'block'}`}>
+                <div className={`mx-auto px-4 ${(turnOnLoader) ? 'hidden' : 'block'}`}>
                     <div>
                         <p className='py-3 text-center'>長按圖片進行下載</p>
                         <p className='text-center'>分享到社群邀請朋友測驗，尋找你的冒險夥伴！</p>
@@ -124,7 +125,7 @@ export default function Result() {
                         <p>打造未來雲端趨勢</p>
                     </div>
                     <img loading="lazy" src={getImageUrl('result-element', 'clouds', "webp")} alt="clouds" className='my-16' />
-                    <a href="https://www.gaia.net/tc/services/2/cloudcomputing" target='blank' className='block text-center rounded-full bg-white/60
+                    <a href="https://www.gaia.net/tc/services/2/cloudcomputing" target='blank' className='block text-center rounded-full
                     border-2 border-transparent
                     focus:outline-none  bg-white/60 w-full py-4 mt-6 text-black active:bg-purple-800 
                     active:text-white 
@@ -136,8 +137,8 @@ export default function Result() {
 }
 
 function Loading({ imageLoaded }) {
-    return <div className={`rounded-xl mx-5 pt-16 pb-16 space-y-4 h-screen grid place-items-center ${imageLoaded ? 'block' : 'block'} `}>
-        <div>
+    return <div className={`rounded-xl h-full grid place-items-center ${imageLoaded ? 'block' : 'block'} `}>
+        <div className='space-y-4'>
             <img src={getImageUrl('result-element', 'loader', 'webp')} alt="loader" className='w-20 h-20 block mx-auto animate-bounce' />
             <img src={getImageUrl('result-element', 'wood', 'webp')} alt="loader" className='w-20 block mx-auto' />
             <p className='text-center text-white pt-3'>正在收集結果...</p>
