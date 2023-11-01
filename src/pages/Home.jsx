@@ -11,7 +11,7 @@ export default function Home() {
     return (
         <Layout>
             <div className='absolute top-1/2 -translate-y-1/2 inset-x-0'>
-                <div className='absolute top-20 right-10'>
+                <div className='absolute top-16 right-10'>
                     <img src={getImageUrl('home', 'dialog', "webp")} alt="dialog" width="135" className='animate-bounce' />
                 </div>
                 <img src={getImageUrl('home', 'title', "webp")} alt="title" width="290" className='mx-auto pr-4' />

@@ -45,6 +45,7 @@ export default function InitUser() {
                         className='block bg-transparent border-b-2 pb-2 text-lg text-white/70 text-center placeholder:text-white/70 focus:outline-none 
                         focus:border-b-2
                         focus:border-white/50'
+                        maxLength="12"
                     />
                 </div>
                 {userName && <button className="absolute top-full w-60 px-4 py-2  rounded-full text-zinc-700 text-center font-bold leading-tight 

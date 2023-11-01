@@ -1,5 +1,6 @@
 import { useLocation, useNavigate, Link } from 'react-router-dom';
-import { useState, useRef, useMemo, useEffect } from 'react'
+import { useState, useRef, useMemo, useEffect, useContext } from 'react'
+import { QuizContext } from '../context/QuizContext'
 import getImageUrl from "../helpers/getImageUrl";
 
 export default function Result() {
@@ -69,7 +70,7 @@ export default function Result() {
             backgroundRepeat: "repeat",
         }}>
             <div className='sm:max-w-[400px] mx-auto'>
-                <div className={`h-[720px] flex justify-center items-center ${imageLoaded ? 'hidden' : 'block'}`}>圖片載入中...</div>
+                <Loading imageLoaded={imageLoaded} />
                 <img loading="eager" src={imageDataUrl} alt="result-img" className={imageLoaded ? 'block' : 'hidden'} ref={imageToShare} onLoad={() => setImageLoaded(true)} />
 
                 {imageLoaded && <div className='mx-auto px-4'>
@@ -109,6 +110,16 @@ export default function Result() {
         </div >
     )
 }
+
+function Loading({ imageLoaded }) {
+    console.log('imageLoaded', imageLoaded);
+    return <div className={`rounded-xl mx-5 pt-16 pb-16 space-y-4 ${imageLoaded ? 'hidden' : 'block'} `}>
+        <img src={getImageUrl('result-element', 'loader', 'webp')} alt="loader" className='w-20 h-20 block mx-auto animate-bounce' />
+        <img src={getImageUrl('result-element', 'wood', 'webp')} alt="loader" className='w-20 block mx-auto' />
+        <p className='text-center text-white pt-3'>正在收集結果...</p>
+    </div>
+}
+
 
 function MobileBtn({ imageToShare, role }) {
     async function shareFromAPI() {

@@ -15,19 +15,8 @@ export default function QuizProvider({ children }) {
 
     // quiz
     const [isVisible, setIsVisible] = useState(true);
-    const [isLoading, setIsLoading] = useState(false)
     const [questionIndex, setQuestionIndex] = useState(0)
     const currentQuestion = data[questionIndex]
-
-    async function simulateCalculation() {
-        setIsLoading(true)
-        return new Promise(resolve => {
-            setTimeout(() => {
-                setIsLoading(false)
-                resolve()
-            }, 1000);
-        })
-    }
 
     async function next(id, weight) {
         sum += weight
@@ -40,7 +29,7 @@ export default function QuizProvider({ children }) {
                 setQuestionIndex(q => q + 1)
             }, 100);
         } else {
-            await simulateCalculation()
+            // await simulateCalculation()
             navigate("/result", { state: { result: sum } })
         }
     }
@@ -95,7 +84,6 @@ export default function QuizProvider({ children }) {
         <QuizContext.Provider
             value={{
                 isVisible,
-                isLoading,
                 currentQuestion,
                 audioRef,
                 isPlaying,
