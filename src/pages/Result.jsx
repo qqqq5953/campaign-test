@@ -47,7 +47,7 @@ export default function Result() {
             setTimeout(() => {
                 setTurnOnLoader(false)
                 resolve()
-            }, 1000);
+            }, 2000);
         })
     }
 
