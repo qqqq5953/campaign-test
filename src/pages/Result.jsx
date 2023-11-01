@@ -90,7 +90,7 @@ export default function Result() {
                 {/* 結果圖 */}
                 <img loading="eager" src={imageDataUrl} alt="result-img" className={imageLoaded ? 'block' : 'hidden'} ref={imageToShare} onLoad={() => setImageLoaded(true)} />
 
-                <div className={`mx-auto px-4 ${imageLoaded ? 'block' : 'hidden'}`}>
+                <div className={`mx-auto px-4 ${(turnOnLoader || !imageLoaded) ? 'hidden' : 'block'}`}>
                     <div>
                         <p className='py-3 text-center'>長按圖片進行下載</p>
                         <p className='text-center'>分享到社群邀請朋友測驗，尋找你的冒險夥伴！</p>
