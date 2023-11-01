@@ -1,10 +1,12 @@
 import getImageUrl from "../helpers/getImageUrl";
 import { useLocation } from 'react-router-dom';
-import { useContext } from "react"
+import { useContext, useState } from "react"
 import { QuizContext } from '../context/QuizContext'
 
 export default function Layout({ children }) {
     const { prev, isPlaying, setIsPlaying, audioRef, playAudio, pauseAudio, isVisible } = useContext(QuizContext);
+    const [isBgImgLoaded, setIsBgImgLoaded] = useState(false)
+
     const location = useLocation()
     const showWaterMarkAndButtons = ['/init', '/quiz'].includes(location.pathname)
 
@@ -20,9 +22,9 @@ export default function Layout({ children }) {
         <div className="fixed inset-x-0 top-0" style={{
             height: '100dvh',
         }}>
-            <img src={getImageUrl('background', '1200-bg', 'webp')} alt="Image description" className="w-full h-full object-cover" />
+            <img src={getImageUrl('background', '1200-bg', 'webp')} alt="Image description" className="w-full h-full object-cover" onLoad={() => setIsBgImgLoaded(true)} />
 
-            {<div className="absolute inset-y-0 left-1/2 -translate-x-1/2 w-full max-w-[400px] flex flex-col items-center justify-between">
+            {isBgImgLoaded && <div className="absolute inset-y-0 left-1/2 -translate-x-1/2 w-full max-w-[400px] flex flex-col items-center justify-between">
                 {showWaterMarkAndButtons &&
                     <div className="py-5 w-3/5">
                         <img src={getImageUrl('background', 'watermark')} alt="watermark" />
